@@ -1,0 +1,5 @@
+This project is licensed under the GNU Lesser General Public License (GNU LGPL)
+reproduced here as COPYING.LESSER. The GNU General Public License (GNU GPL,
+referred to by the GNU LGPL) is reproduced here as COPYING.
+
+Source files and documentation are Copyright ©2019 Douglas Lovell
