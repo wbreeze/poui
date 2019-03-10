@@ -7,14 +7,17 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "serve": "parcel public/index.html",
+    "watch": "parcel watch public/index.html",
+    "build": "parcel build public/index.html"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wbreeze/poui.git"
   },
   "keywords": [
-    "React",
+    "React-component",
     "Partial Order",
     "Voting",
     "Vote"
@@ -24,5 +27,14 @@
   "bugs": {
     "url": "https://github.com/wbreeze/poui/issues"
   },
-  "homepage": "https://github.com/wbreeze/poui#readme"
+  "homepage": "https://github.com/wbreeze/poui#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "parcel-bundler": "^1.12.0",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  }
 }
