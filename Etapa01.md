@@ -56,4 +56,12 @@ We follow the procedure from the Noteworthy post,
 [Creating a React App… From Scratch](https://blog.usejournal.com/creating-a-react-app-from-scratch-f3c693b84658)
 except, instead of using Webpack, we use Parcel.
 
+We now have:
+- `npm run serve` which watches for and builds changes, runs a small web
+  server on `localhost:1234`
+- `npm run watch` which watches for and builds changes
+- `npm run build` which builds files into the `dist` directory
+
+The app runs. React renders the content of the App component.
+
 
