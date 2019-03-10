@@ -9,7 +9,7 @@ Refer to the `docs` directory for
 ## Usage
 
 The package will be available in the Node.js package repository as,
-"[poui]()."
+"[poui](https://www.npmjs.com/package/poui)."
 
 Use your package manager to install it.
 
