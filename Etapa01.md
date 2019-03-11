@@ -63,8 +63,8 @@ We now have configured scripts in `package.json`:
 - `npm run build` which builds files into the `dist` directory
 
 In the `package.json` file we have:
-- Babel installed with the `preset-env` and `preset-react` presets installed
-  and configured.
+- Babel installed and configured with the
+  `preset-env` and `preset-react` presets.
 - Parcel installed for build, with a lightweight web server for poking.
 - React and ReactDOM
 
@@ -78,3 +78,57 @@ We have:
   the top level App component into the target `div` of the page.
 
 The app runs. React renders the content of the App component.
+
+## List item component
+
+So, onward! We need a component that captures an item to be ranked.
+We'll model it as a list item, although it will never be rendered without
+JavaScript. It could just as well be a `<div>`, but `<li>` feels right.
+If the partial order was rendered in plain old HTML it might look like this:
+```
+<ol>
+  <li>First ranked item</li>
+  <li><ul>
+    <li>One of two ranked second</li>
+    <li>Another of two ranked second</li>
+  </ul></li>
+  <li>Third ranked item</li>
+  <li>Fourth ranked item</li>
+</ol>
+```
+
+### Tests
+
+There are a few ways to organize tests:
+- Place them in the component directory next to the components they are
+testing. This mixes tests and code in the source. It places tests right
+next to the code being tested.
+- Place them in a `tests' directory that lives next to `src`, mirroring the
+directory structure of `src`. This has certain advantages for packaging and
+distribution-- simply ignore the `tests` directory. It results, however,
+in a lot of directory traversal gymnastics in the imports.
+- Place them in `tests` directories within the `src` directories, next to
+the code being tested. This feels like a happy compromise between the first
+two. It lends some structure and separation to the tests without imposing
+a requirement to do directory gymnastics in the imports. The imports look
+like, for example, `import Item from '../Item';`.
+
+We have to make a choice between Mocha and Chai vs. Jest. It could be a
+toss-up. Jest looks simpler to set-up and use. Mocha has rich handling
+for testing asynchronous code. In this case, we're developing a library
+component. This isn't a full-fledged web application. It feels right to
+keep testing simple and straightforward. Some might argue that both are
+simple and straightforward. We're going with Jest here.
+
+We have to make a choice between DOM testing library (DTL) and enzyme.
+One major difference is in the query methods. DTM focuses on what is visible.
+Its queries focus on text, name, display value, etc. Enzyme allows queries
+by internal, non-visible attributes such as classes, id's, and node types.
+The philosophy of DTL is understandable, but we're going with Enzyme, to
+have access to all of the DOM attributes.
+
+Installing Jest "added 181 packages from 109 contributors".
+Installing Enzyme with the React-16 adapter
+"added 33 packages from 22 contributors".
+We build upon a mountain of openly distributed, mostly open source work from
+so many people and places.
