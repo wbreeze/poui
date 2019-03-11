@@ -56,12 +56,25 @@ We follow the procedure from the Noteworthy post,
 [Creating a React App… From Scratch](https://blog.usejournal.com/creating-a-react-app-from-scratch-f3c693b84658)
 except, instead of using Webpack, we use Parcel.
 
-We now have:
+We now have configured scripts in `package.json`:
 - `npm run serve` which watches for and builds changes, runs a small web
   server on `localhost:1234`
 - `npm run watch` which watches for and builds changes
 - `npm run build` which builds files into the `dist` directory
 
+In the `package.json` file we have:
+- Babel installed with the `preset-env` and `preset-react` presets installed
+  and configured.
+- Parcel installed for build, with a lightweight web server for poking.
+- React and ReactDOM
+
+We have:
+- a browser index file as `public/index.html` which loads the
+  application script and provides a target `div` in the page body for
+  React to render to.
+- a top-level component, `App` from `src/App.js` that renders
+  an `h1` element.
+- an index script as `src/index.js` that loads React and renders
+  the top level App component into the target `div` of the page.
+
 The app runs. React renders the content of the App component.
-
-
