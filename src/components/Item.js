@@ -17,7 +17,7 @@ class Item extends React.PureComponent {
 
   render() {
     return (
-      <li onClick={this.clickHandler}>
+      <li className="poui-item" onClick={this.clickHandler}>
         { this.props.itemLabel }
       </li>
     );

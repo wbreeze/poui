@@ -135,6 +135,7 @@ We build upon an almost instantly constructed, massive foundation of
 openly distributed, mostly open source work from so many people and places.
 
 ### The component
+
 Having the ability to test it, we construct `src/components/Item.js` with
 a matching unit test in `src/components/tests/Item.test.js`.
 
@@ -153,4 +154,23 @@ syntax for writing component classes.
 Installing that creates a little bit of tech-debt. We'll have to adjust the
 Babel plugins when this syntax moves to mainstream.
 
+That isn't a huge increment above maintaining versions of things with
+upgrades and patches.
 
+### Styling
+
+Having the component, we'd like it to look more like a clickable button
+and not an HTML rendered list item with a bullet.
+
+For now, we put the styling in the `App.css` file. We'll revisit this later
+and most likely make a top-level stylesheet for the top-level component.
+
+The component needs a class so that we can target the styling. We treat
+styling for this component as a top-level block in the block-element-model
+(BEM) paradigm.
+
+We use font-relative units in order to maintain visual feel of the
+component in the presense of larger or smaller font size settings.
+
+To add some interactive, button-like behavior, we change the cursor shape
+and alter the border color when the pointer tracks over the item.
