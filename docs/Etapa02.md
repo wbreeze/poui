@@ -80,4 +80,4 @@ In addition, we added a little top and bottom margin to them so they don't
 butt up against one another. For now, we're not worrying about removing top
 margin from the first and bottom margin from the last.
 
-![Etapa02 Screen capture](docs/images/Etapa02ScreenCapture.png)
+![Etapa02 Screen capture](images/Etapa02ScreenCapture.png)

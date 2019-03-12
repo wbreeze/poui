@@ -51,12 +51,13 @@ component render methods of the components in the source tree.
 ## Etapas
 The project is developed in stages, or "etapas," each with a
 description of the work carried out in the stage. The work descriptions are
-in markdown documents with the name of the stage, e.g. [Etapa01.md](Etapa01.md).
+in the docs directory as markdown documents with the name of the stage,
+e.g. [Etapa01.md](docs/Etapa01.md).
 
 Git tags mark the
 end of one stage and the beginning of the next. In other words, there is
 a tag, `Etapa01` with all of the work committed to date before moving on
 to Etapa02.
 
-1. [Etapa01](Etapa01) Setup and list item component.
-
+1. [Etapa01](docs/Etapa01.md) Setup and list item component.
+1. [Etapa02](docs/Etapa02.md) Implement container component.
