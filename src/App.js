@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Item from "./components/Item"
+import Parto from "./components/Parto"
 import "./App.css";
 
 class App extends Component {
@@ -7,7 +7,9 @@ class App extends Component {
     return(
       <div className="poui-root">
         <h1>Partial Order User Interface</h1>
-        <Item itemLabel='An item' />
+        <Parto
+          itemList={['Fresa', 'Durazno', 'Mandarina', 'Zarzamora', 'Frambuesa']}
+        />
       </div>
     );
   }
