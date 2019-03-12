@@ -4,9 +4,9 @@
 ## Etapa02
 
 In this stage we add the component that will contain list items.
-In the first stage, we modeled a list item as an HTML <li> element in
+In the first stage, we modeled a list item as an HTML `<li>` element in
 a Item component.
-The container component will be an HTML <ol> element that has multiple
+The container component will be an HTML `<ol>` element that has multiple
 Item component children.
 
 For a name, we could go with "PartialOrder", but that's a bit long.
@@ -15,12 +15,12 @@ it's a bit lacking in descriptive properties, and it's kind of short.
 We could try "Order", but that has all sorts of meanings.
 What to do? Perhaps "PartO" as an abbreviation? It's easy to say.
 In Spanish, "parto" means delivery, as in delivering a baby.
-As an unintended other meaning, that isn't a bad. It's our new baby.
+As an unintended other meaning, that isn't bad.
 The 'O' is a little awkward. It can be taken for zero '0'.
 It sits out there on the end like a solitary egg, and it's awkward
 to type. Let's go with "Parto".
 
-One question is how smart to make it. Do we just make it an <ol>
+One question is how smart to make it. Do we just make it an `<ol>`
 with children and pass the children to it, or do we make it render
 Item children from its properties? The second feels reasonable, because
 we don't need it to be so flexible as to take any kind of children.
@@ -54,9 +54,9 @@ Furthur guidance can be found in:
   a blog post from Lucy Bain that works step by step through props and state,
   what they're for and how they're used.
 
-So, for starters, Parto is a component that receives a list of itemDescription
+So, for starters, Parto is a component that receives a list of itemLabel
 in it's properties and renders a list of Item components wrapped in an
-<ol> element.
+`<ol>` element.
 
 One of many implementation details is that the Item components rendered
 by the Parto component will need behavior injected by the `onClickEvent`
@@ -67,3 +67,17 @@ manage the behavior of the items. Items will behave in two different ways,
 depending on whether they have yet been placed in order. We'll (eventually)
 end-up with two behaviors for Parto to inject into its Item component children.
 
+To finish-off, we do some visual work, having the App component render
+a Parto component with a list of fruits. (Sorry, in Spanish.)
+Seeing the result, we add some styling.
+The class for the `<ol>` element rendered from the Parto component is,
+`poui-parto`.
+
+For styling, we made the `poui-parto` class render with the CSS flex
+layout in a column. We removed the `display: block` property from the
+`poui-item` class. These now display as numbered items in the ordered list.
+In addition, we added a little top and bottom margin to them so they don't
+butt up against one another. For now, we're not worrying about removing top
+margin from the first and bottom margin from the last.
+
+![Etapa02 Screen capture](docs/images/Etapa02ScreenCapture.png)
