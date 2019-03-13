@@ -4,7 +4,12 @@ import Parto from '../Parto';
 
 describe('Parto', () => {
   let wrapper;
-  const items = ['Zanahoria', 'Remolacha', 'Calabaza', 'Tomate'];
+  const items = [
+    { "key": 'Z', "description": 'Zanahoria' },
+    { "key": 'R', "description": 'Remolacha' },
+    { "key": 'C', "description": 'Calabaza' },
+    { "key": 'T', "description": 'Tomate' },
+  ];
 
   beforeEach(() => {
     wrapper = shallow(
@@ -22,6 +27,9 @@ describe('Parto', () => {
       expect(node.text()).toEqual('<Item />');
       labels.push(node.prop('itemLabel'));
     });
-    expect(labels.sort()).toEqual(items.sort());
+    let expectedLabels = items.map((item) => {
+      return item.description;
+    });
+    expect(labels.sort()).toEqual(expectedLabels.sort());
   });
 });

@@ -8,8 +8,8 @@ class Parto extends React.PureComponent {
   };
 
   listItems() {
-    return this.props.itemList.map((item, index) => {
-      return (<Item key={index.toString()} itemLabel={item} />);
+    return this.props.itemList.map((item) => {
+      return (<Item key={item.key} itemLabel={item.description} />);
     });
   }
 
