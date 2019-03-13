@@ -1,15 +1,11 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import Parto from '../Parto';
+import ListItems from '../../ListItems';
 
 describe('Parto', () => {
   let wrapper;
-  const items = [
-    { "key": 'Z', "description": 'Zanahoria' },
-    { "key": 'R', "description": 'Remolacha' },
-    { "key": 'C', "description": 'Calabaza' },
-    { "key": 'T', "description": 'Tomate' },
-  ];
+  const items = ListItems.sample;
 
   beforeEach(() => {
     wrapper = shallow(
@@ -29,9 +25,16 @@ describe('Parto', () => {
       expect(node.text()).toEqual('<Item />');
       labels.push(node.prop('itemLabel'));
     });
-    let expectedLabels = items.map((item) => {
-      return item.description;
-    });
+    let expectedLabels = ListItems.descriptions(items);
     expect(labels.sort()).toEqual(expectedLabels.sort());
+  });
+
+  it('places ordered items first in order', () => {
+    let parto = ['C','Z'];
+    wrapper.setProps({ "itemList": items, "parto": parto }, () => {
+      expect(wrapper.find('ol').children().length).toBe(parto.length);
+      expect(wrapper.find('ul').children().length).toBe(
+        items.length - parto.length);
+    });
   });
 });
