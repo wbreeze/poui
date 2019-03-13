@@ -17,13 +17,15 @@ describe('Parto', () => {
     );
   });
 
-  it('renders an <ol>', () => {
-    expect(wrapper.type()).toBe('ol');
+  it('renders a <div> with <ol> and <ul>', () => {
+    expect(wrapper.type()).toBe('div');
+    expect(wrapper.childAt(0).type()).toBe('ol');
+    expect(wrapper.childAt(1).type()).toBe('ul');
   });
 
   it('uses items as children', () => {
     let labels = [];
-    wrapper.children().forEach((node) => {
+    wrapper.find('ul').children().forEach((node) => {
       expect(node.text()).toEqual('<Item />');
       labels.push(node.prop('itemLabel'));
     });

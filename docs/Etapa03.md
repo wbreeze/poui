@@ -33,4 +33,13 @@ Both key and description are string valued.
 
 We update the Parto test and component to work with the itemList as tuples.
 
+That was the easy part. Now we add the ordering property. We want it to
+default to `[]`. But more, we want the Parto component to represent two
+lists: the list of what's ordered (as `<ol>`) followed by the list of
+"the rest" (as `<ul>'). Both it and its tests need to evolve accordingly.
+
+First we update the tests to look for the `<ol>` and `<ul>` parts, with
+all of the items found in the `<ul>` part. We update the Parto component
+to pass.
+
 

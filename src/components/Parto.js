@@ -5,7 +5,12 @@ import Item from "./Item"
 class Parto extends React.PureComponent {
   static propTypes = {
     itemList: PropTypes.array.isRequired,
+    parto: PropTypes.array,
   };
+
+  static defaultProps = {
+    parto: [],
+  }
 
   listItems() {
     return this.props.itemList.map((item) => {
@@ -15,9 +20,13 @@ class Parto extends React.PureComponent {
 
   render() {
     return (
-      <ol className="poui-parto">
-        {this.listItems()}
-      </ol>
+      <div className="poui-parto">
+        <ol className="poui-parto-ol">
+        </ol>
+        <ul className="poui-parto-ul">
+          {this.listItems()}
+        </ul>
+      </div>
     );
   }
 };
