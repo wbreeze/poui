@@ -22,4 +22,11 @@ describe('PartialOrder', () => {
     let rest = order[order.length - 1];
     expect(rest.length).toBe(items.length - 1);
   });
+
+  it('skips keys in the order not found in items', () => {
+    let order = PartialOrder.arrangeItemsPerOrder(items, ['B','C']);
+    let rest = order[order.length - 1];
+    expect(order.length).toBe(2);
+    expect(rest.length).toBe(items.length-1);
+  });
 });

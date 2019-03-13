@@ -8,6 +8,8 @@ const PartialOrder = {
   arrangeItemsPerOrder: (items, order) => {
     let ordered = order.map((key) => {
       return ListItems.itemFor(items, key);
+    }).filter((item) => {
+      return item !== null;
     });
     let rest = items.filter((item) => {
       return !ordered.includes(item);
