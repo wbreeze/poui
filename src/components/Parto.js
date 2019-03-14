@@ -4,9 +4,16 @@ import Item from "./Item"
 import PartialOrder from "../PartialOrder";
 
 class Parto extends React.PureComponent {
+  static defaultProps = {
+    orderedItemClick: () => {},
+    unorderedItemClick: () => {},
+  }
+
   static propTypes = {
     itemList: PropTypes.array.isRequired,
     parto: PropTypes.array,
+    orderedItemClick: PropTypes.func,
+    unorderedItemClick: PropTypes.func,
   };
 
   static defaultProps = {
@@ -18,9 +25,16 @@ class Parto extends React.PureComponent {
       this.props.itemList, this.props.parto);
   }
 
-  renderedItems(items) {
+  renderedItems(items, onClickEvent) {
     return items.map((item) => {
-      return (<Item key={item.key} itemLabel={item.description} />);
+      return (
+        <Item
+          key={item.key}
+          itemKey={item.key}
+          itemLabel={item.description}
+          onClickEvent={onClickEvent}
+        />
+      );
     });
   }
 
@@ -29,10 +43,12 @@ class Parto extends React.PureComponent {
     return (
       <div className="poui-parto">
         <ol className="poui-parto-ol">
-          {this.renderedItems(ordered.slice(0,-1))}
+          {this.renderedItems(
+            ordered.slice(0,-1), this.props.orderedItemClick)}
         </ol>
         <ul className="poui-parto-ul">
-          {this.renderedItems(ordered[ordered.length-1])}
+          {this.renderedItems(
+            ordered[ordered.length-1], this.props.unorderedItemClick)}
         </ul>
       </div>
     );
