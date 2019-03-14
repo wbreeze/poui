@@ -8,11 +8,12 @@ class Item extends React.PureComponent {
 
   static propTypes = {
     itemLabel: PropTypes.node.isRequired,
+    itemKey: PropTypes.string.isRequired,
     onClickEvent: PropTypes.func,
   }
 
   clickHandler = (e) => {
-    this.props.onClickEvent(this);
+    this.props.onClickEvent(this.props.itemKey);
   }
 
   render() {
