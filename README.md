@@ -62,3 +62,5 @@ to Etapa02.
 1. [Etapa01](docs/Etapa01.md) Setup and list item component.
 1. [Etapa02](docs/Etapa02.md) Implement container component.
 1. [Etapa03](docs/Etapa03.md) Incorporate an ordering specification.
+1. [Etapa04](docs/Etapa04.md) Add interaction to select items in order.
+

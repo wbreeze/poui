@@ -1,3 +1,10 @@
+## Prior stages
+1. [Etapa01](docs/Etapa01.md) Setup and list item component.
+1. [Etapa02](docs/Etapa02.md) Implement container component.
+1. [Etapa03](docs/Etapa03.md) Incorporate an ordering specification.
+
+## Etapa04
+
 We now have a pretty good static implementation of the UI. It isn't done.
 There are many details to implement, such as the staggering of items so
 that they don't appear all grouped together. However these details will
@@ -87,3 +94,6 @@ For the first time, the component has some utility.
 1. ![Etapa04 Screen Capture 3](images/Etapa04Capture3.png)
 1. ![Etapa04 Screen Capture 4](images/Etapa04Capture4.png)
 1. ![Etapa04 Screen Capture 5](images/Etapa04Capture5.png)
+
+## Next stage
+[Etapa05](docs/Etapa05.md) Add full partial order support

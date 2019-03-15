@@ -1,5 +1,5 @@
-## Prior stages
-[Etapa01](Etapa01.md) setup and initial list item implementation
+## Prior stage
+[Etapa01](docs/Etapa01.md) Setup and list item component.
 
 ## Etapa02
 
@@ -81,3 +81,6 @@ butt up against one another. For now, we're not worrying about removing top
 margin from the first and bottom margin from the last.
 
 ![Etapa02 Screen capture](images/Etapa02ScreenCapture.png)
+
+## Next stage
+[Etapa03](docs/Etapa03.md) Incorporate an ordering specification.
