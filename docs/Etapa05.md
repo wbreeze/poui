@@ -45,3 +45,83 @@ letters as keys, we represent the above preference as:
 
 Add a little olive oil and a dash of salt. We have a nice salad.
 
+## Tests for full partial orders
+
+In [Etapa03](Etapa03) we pulled a bit of a fast one when we placed a
+test fixture for the ListItems module inside of the module.
+We now repair that by adding a `fixtures` directory within `src`
+and repairing the tests so to use it.
+
+We also add a few more items to the fixture, which we've called `salad`,
+in order to have more items to work with when specifying test orders.
+
+In this refactoring exercise we broke a lot of tests. In order to focus
+on one at a time, we extend the scripts in `package.json` to enable
+the "watch" capability of Jest. And bonus, at last, we don't have to
+run the tests manually with every change.
+
+## PartialOrder
+
+The first part of this effort is to update the `arrangeItemsPerOrder`
+function in `PartialOrder` to handle the embedded array in the specified
+ordering. We use a recursive function, which is more general than needed,
+but still the most straightforward method.
+
+## Parto
+
+In the Parto component, we likewise need to recursively traverse the
+embedded arrays within the ordered items. When we hit an array, we
+generate a `<ul>` enclosure around the items in the array, embedded
+within the outer ordered list. We likewise implement this recursively,
+although we shouldn't be getting lists with more than one level of
+embedding.
+
+React gives as a little bit of a curve ball, wanting keys for the
+`<ul>` lists we're embedding in the `<ol>`. We solve this by joining
+together the keys of the items within the `<ul>`.
+
+The separate rendering of the items which come last is beginning to look
+and feel a bit strange. Why not render them as the final, grouped item
+of the ordered list? This feels like a reasonable thing to do. The only
+difference between the items in the top `ol` and the bottom `ul` of "the
+rest" is the behavior we are giving to "the rest".
+
+Because of that difference, we're holding-off making that change for now.
+We're about to address additional behavior for the ordered items.
+It will make sense to visit refactoring the bottom list render as part
+of that task.
+
+## Test by poking
+
+We update the App such that it initializes with a true partial order,
+just to see how it looks. And. It doesn't look right. The embedded
+group isn't itself inside of a list item. This highlights the need to
+verify by running the program, not only rely on tests.
+
+The fix to the Parto component is quite straightforward, with tests
+modified to check the `<ul>` embedded within an `<li>`.
+
+Also by poking, the behavior we implemented in [Etapa04](Etapa04.md) is
+no longer working. Clicking on an item in the bottom, unordered list
+no longer moves it into the order.
+
+The tests for `SelectInOrder` are passing. Refactoring them to operate
+on an existing rendered partial order, rather than from the initial state,
+causes them to fail.
+
+The problem had to do with the way we were passing props from the
+SelectInOrder component to the Parto component. Where before, the
+SelectInOrder component didn't have a `parto` prop, with the change,
+it did. The `parto` prop on the component overrode the attempt to set
+it from the state. Thus, state changes didn't get passed down.
+Although clicking changed the state, we still rendered from the initial props.
+
+## Next steps
+
+In the next stage, we'll work on the interaction some more.
+We'll implement the click behavior of items after they have been
+added to the ordering.
+
+![Etapa05 Screen Capture 1](images/Etapa05Capture1.png)
+
+![Etapa05 Screen Capture 2](images/Etapa05Capture2.png)

@@ -2,10 +2,11 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import Parto from '../Parto';
 import ListItems from '../../ListItems';
+import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 
 describe('Parto', () => {
   let wrapper;
-  const items = ListItems.sample;
+  const items = ListItemsFixtures.salad;
 
   describe('shallow', () => {
     beforeEach(() => {
@@ -37,6 +38,19 @@ describe('Parto', () => {
         expect(wrapper.find('ol').children().length).toBe(parto.length);
         expect(wrapper.find('ul').children().length).toBe(
           items.length - parto.length);
+      });
+    });
+
+    it('places partial ordered items together', () => {
+      let parto = ['T','L',['M','P'],'A'];
+      wrapper.setProps({ "itemList": items, "parto": parto }, () => {
+        let ordering = wrapper.find('ol');
+        let thirdItem = ordering.childAt(2);
+        expect(thirdItem.type()).toBe('li');
+        let embeddedGroup = thirdItem.children().first();
+        expect(embeddedGroup.type()).toBe('ul');
+        expect(embeddedGroup.exists({ itemKey: 'M' }));
+        expect(embeddedGroup.exists({ itemKey: 'P' }));
       });
     });
   });

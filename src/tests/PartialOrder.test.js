@@ -1,8 +1,8 @@
 import PartialOrder from '../PartialOrder';
-import ListItems from '../ListItems';
+import ListItemsFixtures from '../fixtures/ListItemsFixtures';
 
 describe('PartialOrder', () => {
-  const items = ListItems.sample;
+  const items = ListItemsFixtures.salad;
 
   it('places all items in "rest"', () => {
     let order = PartialOrder.arrangeItemsPerOrder(items, []);
@@ -28,5 +28,16 @@ describe('PartialOrder', () => {
     let rest = order[order.length - 1];
     expect(order.length).toBe(2);
     expect(rest.length).toBe(items.length-1);
+  });
+
+  it('places grouped items together', () => {
+    let order = PartialOrder.arrangeItemsPerOrder(
+      items, ['T','L',['M','P'],'A']
+    );
+    expect(order.length).toBe(5); // includes "the rest"
+    expect(Array.isArray(order[order.length-1]))
+    let group = order[2];
+    expect(Array.isArray(group));
+    expect(group.length).toBe(2);
   });
 });
