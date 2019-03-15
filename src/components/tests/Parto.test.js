@@ -40,6 +40,14 @@ describe('Parto', () => {
           items.length - parto.length);
       });
     });
+
+    it('places partial ordered items together', () => {
+      let parto = ['T','L',['M','P'],'A'];
+      wrapper.setProps({ "itemList": items, "parto": parto }, () => {
+        let ordering = wrapper.find('ol');
+        expect(ordering.childAt(2).type()).toBe('ul');
+      });
+    });
   });
 
   describe('deep', () => {

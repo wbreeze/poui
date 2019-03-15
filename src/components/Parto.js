@@ -25,16 +25,38 @@ class Parto extends React.PureComponent {
       this.props.itemList, this.props.parto);
   }
 
+  renderItem(item, onClickEvent) {
+    return (
+      <Item
+        key={item.key}
+        itemKey={item.key}
+        itemLabel={item.description}
+        onClickEvent={onClickEvent}
+      />
+    );
+  }
+
+  renderedItemsKey(items) {
+    return items.map((i) => {
+      return Array.isArray(i) ? "-" + this.renderedItemsKey(i) + "-" : i.key;
+    }).join("-");
+  }
+
+  renderedItemsUL(items, onClickEvent) {
+    return(
+      <ul key={this.renderedItemsKey(items)} className="poui-parto-ul">
+        {this.renderedItems(items, onClickEvent)}
+      </ul>
+    );
+  }
+
   renderedItems(items, onClickEvent) {
     return items.map((item) => {
-      return (
-        <Item
-          key={item.key}
-          itemKey={item.key}
-          itemLabel={item.description}
-          onClickEvent={onClickEvent}
-        />
-      );
+      if (Array.isArray(item)) {
+        return this.renderedItemsUL(item, onClickEvent);
+      } else {
+        return this.renderItem(item, onClickEvent);
+      }
     });
   }
 
