@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PartoWithSelection from "./components/SelectInOrder";
-import ListItems from "./ListItems";
+import ListItemsFixtures from './fixtures/ListItemsFixtures';
 import "./App.css";
 
 class App extends Component {
@@ -9,7 +9,8 @@ class App extends Component {
       <div className="poui-root">
         <h1>Partial Order User Interface</h1>
         <PartoWithSelection
-          itemList={ListItems.sample}
+          itemList={ListItemsFixtures.salad}
+          parto={['T','L',['M','P'],'A']}
         />
       </div>
     );
