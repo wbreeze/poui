@@ -1,5 +1,5 @@
 ## Prior stage
-[Etapa01](docs/Etapa01.md) Setup and list item component.
+[Etapa01](Etapa01.md) Setup and list item component.
 
 ## Etapa02
 
@@ -83,4 +83,4 @@ margin from the first and bottom margin from the last.
 ![Etapa02 Screen capture](images/Etapa02ScreenCapture.png)
 
 ## Next stage
-[Etapa03](docs/Etapa03.md) Incorporate an ordering specification.
+[Etapa03](Etapa03.md) Incorporate an ordering specification.

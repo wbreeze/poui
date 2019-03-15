@@ -1,6 +1,6 @@
 ## Prior stages
-1. [Etapa01](docs/Etapa01.md) Setup and list item component.
-1. [Etapa02](docs/Etapa02.md) Implement container component.
+1. [Etapa01](Etapa01.md) Setup and list item component.
+1. [Etapa02](Etapa02.md) Implement container component.
 
 ## Etapa03
 
@@ -62,4 +62,4 @@ We set-up the App to render the Parto with a partial order specification.
 ![Etapa03 Screen capture](images/Etapa03ScreenCapture.png)
 
 ## Next stage
-[Etapa04](Etapa01.md) Add interaction to select items in order.
+[Etapa04](Etapa04.md) Add interaction to select items in order.

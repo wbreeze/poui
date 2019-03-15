@@ -1,7 +1,7 @@
 ## Prior stages
-1. [Etapa01](docs/Etapa01.md) Setup and list item component.
-1. [Etapa02](docs/Etapa02.md) Implement container component.
-1. [Etapa03](docs/Etapa03.md) Incorporate an ordering specification.
+1. [Etapa01](Etapa01.md) Setup and list item component.
+1. [Etapa02](Etapa02.md) Implement container component.
+1. [Etapa03](Etapa03.md) Incorporate an ordering specification.
 
 ## Etapa04
 
@@ -96,4 +96,4 @@ For the first time, the component has some utility.
 1. ![Etapa04 Screen Capture 5](images/Etapa04Capture5.png)
 
 ## Next stage
-[Etapa05](docs/Etapa05.md) Add full partial order support
+[Etapa05](Etapa05.md) Add full partial order support

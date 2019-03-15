@@ -176,4 +176,4 @@ To add some interactive, button-like behavior, we change the cursor shape
 and alter the border color when the pointer tracks over the item.
 
 ## Next stage
-[Etapa02](docs/Etapa02.md) Implement container component.
+[Etapa02](Etapa02.md) Implement container component.
