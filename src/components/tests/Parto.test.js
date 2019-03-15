@@ -2,10 +2,11 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import Parto from '../Parto';
 import ListItems from '../../ListItems';
+import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 
 describe('Parto', () => {
   let wrapper;
-  const items = ListItems.sample;
+  const items = ListItemsFixtures.salad;
 
   describe('shallow', () => {
     beforeEach(() => {

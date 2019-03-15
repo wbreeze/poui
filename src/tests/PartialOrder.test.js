@@ -1,8 +1,8 @@
 import PartialOrder from '../PartialOrder';
-import ListItems from '../ListItems';
+import ListItemsFixtures from '../fixtures/ListItemsFixtures';
 
 describe('PartialOrder', () => {
-  const items = ListItems.sample;
+  const items = ListItemsFixtures.salad;
 
   it('places all items in "rest"', () => {
     let order = PartialOrder.arrangeItemsPerOrder(items, []);

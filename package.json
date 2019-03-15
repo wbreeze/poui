@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "jest",
+    "dev" : "jest --watch",
     "serve": "parcel public/index.html",
     "watch": "parcel watch public/index.html",
     "build": "parcel build public/index.html"

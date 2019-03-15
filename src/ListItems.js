@@ -1,12 +1,5 @@
 // functions for manipulating data structured as demonstrated by sample
 const ListItems = {
-  sample: [
-    { "key": 'Z', "description": 'Zanahoria' },
-    { "key": 'R', "description": 'Remolacha' },
-    { "key": 'C', "description": 'Calabaza' },
-    { "key": 'T', "description": 'Tomate' },
-  ],
-
   // returns an array of the item keys
   // ordered as found in items
   keys: (items) => {

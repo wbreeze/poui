@@ -45,3 +45,19 @@ letters as keys, we represent the above preference as:
 
 Add a little olive oil and a dash of salt. We have a nice salad.
 
+## Tests for full partial orders
+
+In [Etapa03](Etapa03) we pulled a bit of a fast one when we placed a
+test fixture for the ListItems module inside of the module.
+We now repair that by adding a `fixtures` directory within `src`
+and repairing the tests so to use it.
+
+We also add a few more items to the fixture, which we've called `salad`,
+in order to have more items to work with when specifying test orders.
+
+In this refactoring exercise we broke a lot of tests. In order to focus
+on one at a time, we extend the scripts in `package.json` to enable
+the "watch" capability of Jest. And bonus, at last, we don't have to
+run the tests manually with every change.
+
+

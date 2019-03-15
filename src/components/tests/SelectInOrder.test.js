@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import ListItems from '../../ListItems';
+import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 import PartoWithSelection from '../SelectInOrder';
 
 describe('SelectInOrder', () => {
-  const itemList = ListItems.sample;
+  const itemList = ListItemsFixtures.salad;
   let wrapper;
 
   beforeEach(() => {
