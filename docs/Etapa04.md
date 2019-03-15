@@ -59,11 +59,12 @@ Now is the time.
 We add two handlers to the Proto component:
 - orderedItemClick: for clicking on an ordered item
 - unorderedItemClick: for clicking on an unordered item
+
 and arrange for the first to be the `onClickEvent` for items that are
 ordered, the second for items that are not.
 
 We needed to deep render in the new tests for Proto, so that we can simulate
-the click event on one of its items. We split the tests into two describe
+the click event on one of its items. We split the tests into two `describe`
 groups: one which shallow renders, the other which deep renders.
 
 We needed to put the item key in the Item component props, so that the
@@ -75,3 +76,14 @@ that the callback provides it.
 
 We also updated the Proto component to place the `itemKey` property
 in its Item children, because we made the `itemKey` a required property.
+
+To finish, we use the PartoWithSelection component in place of the Parto
+component in the App. While it doesn't look any different, we can now
+click on the unordered items and see them move into order of click.
+For the first time, the component has some utility.
+
+1. ![Etapa04 Screen Capture 1](images/Etapa04Capture1.png)
+1. ![Etapa04 Screen Capture 2](images/Etapa04Capture2.png)
+1. ![Etapa04 Screen Capture 3](images/Etapa04Capture3.png)
+1. ![Etapa04 Screen Capture 4](images/Etapa04Capture4.png)
+1. ![Etapa04 Screen Capture 5](images/Etapa04Capture5.png)
