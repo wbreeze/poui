@@ -9,7 +9,7 @@ function withSelection(Parto) {
       super(props);
       this.unorderedSelected = this.unorderedSelected.bind(this);
       this.state = {
-        ordering: [],
+        ordering: props.parto || [],
       };
     }
 
@@ -20,11 +20,11 @@ function withSelection(Parto) {
     }
 
     render() {
-      return <Parto
-        parto={this.state.ordering}
-        unorderedItemClick={this.unorderedSelected}
-        {...this.props}
-      />;
+      const props = {...this.props,
+        parto: this.state.ordering,
+        unorderedItemClick: this.unorderedSelected,
+      }
+      return <Parto {...props} />;
     }
   };
 
