@@ -45,7 +45,12 @@ describe('Parto', () => {
       let parto = ['T','L',['M','P'],'A'];
       wrapper.setProps({ "itemList": items, "parto": parto }, () => {
         let ordering = wrapper.find('ol');
-        expect(ordering.childAt(2).type()).toBe('ul');
+        let thirdItem = ordering.childAt(2);
+        expect(thirdItem.type()).toBe('li');
+        let embeddedGroup = thirdItem.children().first();
+        expect(embeddedGroup.type()).toBe('ul');
+        expect(embeddedGroup.exists({ itemKey: 'M' }));
+        expect(embeddedGroup.exists({ itemKey: 'P' }));
       });
     });
   });

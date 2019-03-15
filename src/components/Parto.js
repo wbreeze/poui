@@ -44,9 +44,11 @@ class Parto extends React.PureComponent {
 
   renderedItemsUL(items, onClickEvent) {
     return(
-      <ul key={this.renderedItemsKey(items)} className="poui-parto-ul">
-        {this.renderedItems(items, onClickEvent)}
-      </ul>
+      <li key={this.renderedItemsKey(items)}>
+        <ul className="poui-porto-ul">
+          {this.renderedItems(items, onClickEvent)}
+        </ul>
+      </li>
     );
   }
 
