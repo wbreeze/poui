@@ -63,4 +63,6 @@ to Etapa02.
 1. [Etapa02](docs/Etapa02.md) Implement container component.
 1. [Etapa03](docs/Etapa03.md) Incorporate an ordering specification.
 1. [Etapa04](docs/Etapa04.md) Add interaction to select items in order.
+1. [Etapa05](docs/Etapa05.md) Support full partial order.
+1. [Etapa06](docs/Etapa06.md) Add item click interaction for partial order.
 

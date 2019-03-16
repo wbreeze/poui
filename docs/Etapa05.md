@@ -1,8 +1,8 @@
 ## Prior stages
-1. [Etapa01](docs/Etapa01.md) Setup and list item component.
-1. [Etapa02](docs/Etapa02.md) Implement container component.
-1. [Etapa03](docs/Etapa03.md) Incorporate an ordering specification.
-1. [Etapa04](docs/Etapa04.md) Add interaction to select items in order.
+1. [Etapa01](Etapa01.md) Setup and list item component.
+1. [Etapa02](Etapa02.md) Implement container component.
+1. [Etapa03](Etapa03.md) Incorporate an ordering specification.
+1. [Etapa04](Etapa04.md) Add interaction to select items in order.
 
 ## Support full partial order
 
@@ -121,6 +121,8 @@ Although clicking changed the state, we still rendered from the initial props.
 In the next stage, we'll work on the interaction some more.
 We'll implement the click behavior of items after they have been
 added to the ordering.
+
+[Etapa06](Etapa06.md) Add item click interaction for partial order
 
 ![Etapa05 Screen Capture 1](images/Etapa05Capture1.png)
 
