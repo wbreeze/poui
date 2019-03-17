@@ -42,11 +42,11 @@ class Parto extends React.PureComponent {
     }).join("-");
   }
 
-  renderedItemsUL(items, onClickEvent) {
+  renderedItemsUL(items) {
     return(
       <li key={this.renderedItemsKey(items)}>
         <ul className="poui-porto-ul">
-          {this.renderedItems(items, onClickEvent)}
+          {this.renderedItems(items, this.props.unorderedItemClick)}
         </ul>
       </li>
     );
@@ -55,7 +55,7 @@ class Parto extends React.PureComponent {
   renderedItems(items, onClickEvent) {
     return items.map((item) => {
       if (Array.isArray(item)) {
-        return this.renderedItemsUL(item, onClickEvent);
+        return this.renderedItemsUL(item);
       } else {
         return this.renderItem(item, onClickEvent);
       }
@@ -67,13 +67,8 @@ class Parto extends React.PureComponent {
     return (
       <div className="poui-parto">
         <ol className="poui-parto-ol">
-          {this.renderedItems(
-            ordered.slice(0,-1), this.props.orderedItemClick)}
+          {this.renderedItems(ordered, this.props.orderedItemClick)}
         </ol>
-        <ul className="poui-parto-ul">
-          {this.renderedItems(
-            ordered[ordered.length-1], this.props.unorderedItemClick)}
-        </ul>
       </div>
     );
   }

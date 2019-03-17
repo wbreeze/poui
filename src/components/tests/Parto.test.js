@@ -10,16 +10,19 @@ describe('Parto', () => {
 
   describe('shallow', () => {
     beforeEach(() => {
-      let unorderedItemClick = jest.fn(() => {});
       wrapper = shallow(
-        <Parto itemList={items} unorderedItemClick={unorderedItemClick} />,
+        <Parto itemList={items} />
       );
     });
 
-    it('renders a <div> with <ol> and <ul>', () => {
+    it('renders a <div> with <ol> and embedded <ul>', () => {
       expect(wrapper.type()).toBe('div');
-      expect(wrapper.childAt(0).type()).toBe('ol');
-      expect(wrapper.childAt(1).type()).toBe('ul');
+      const olChild = wrapper.childAt(0);
+      expect(olChild.type()).toBe('ol');
+      const liChild = olChild.childAt(0);
+      expect(liChild.type()).toBe('li');
+      const ulChild = liChild.childAt(0);
+      expect(ulChild.type()).toBe('ul');
     });
 
     it('uses items as children', () => {
@@ -35,8 +38,9 @@ describe('Parto', () => {
     it('places ordered items first in order', () => {
       let parto = ['C','Z'];
       wrapper.setProps({ "itemList": items, "parto": parto }, () => {
-        expect(wrapper.find('ol').children().length).toBe(parto.length);
-        expect(wrapper.find('ul').children().length).toBe(
+        const olChild = wrapper.find('ol');
+        expect(olChild.children().length).toBe(parto.length + 1);
+        expect(olChild.find('ul').children().length).toBe(
           items.length - parto.length);
       });
     });
@@ -86,5 +90,17 @@ describe('Parto', () => {
       itemWrapper.simulate('click');
       expect(unorderedItemClick.mock.calls.length).toBe(1);
     });
+
+    it('calls our injected unorderedItemClick function on embedded group',
+      () => {
+        let key = 'P';
+        let parto = ['T','L',['M','P'],'A','R'];
+        wrapper.setProps({ "parto": parto });
+        let itemWrapper = wrapper.find({ itemKey: key })
+        itemWrapper.simulate('click');
+        expect(unorderedItemClick.mock.calls.length).toBe(1);
+      }
+    );
+
   });
 });
