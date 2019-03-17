@@ -1,7 +1,7 @@
-import PartialOrder from '../PartialOrder';
-import ListItemsFixtures from '../fixtures/ListItemsFixtures';
+import PartialOrder from '../../PartialOrder';
+import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 
-describe('PartialOrder', () => {
+describe('PartialOrder arrangeItemsPerOrder', () => {
   const items = ListItemsFixtures.salad;
 
   it('places all items in "rest"', () => {
