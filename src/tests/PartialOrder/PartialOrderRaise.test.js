@@ -34,4 +34,8 @@ describe('PartialOrder raiseItem', () => {
     const order = PartialOrder.raiseItem(testOrder, 'P');
     expect(order).toEqual(['T','L','P','M','A',['C','R','Z']]);
   });
+
+  it('returns an empty order given an empty order', () => {
+    expect(PartialOrder.raiseItem([], 'A')).toEqual([]);
+  });
 });
