@@ -18,12 +18,50 @@ const PartialOrder = {
   // Returns a list of tuples arranged according to the order, with
   //  the remaining items in an (embedded) list at the end.
   arrangeItemsPerOrder: (items, order) => {
-    let ordered = PartialOrder.selectItems(items, order);
-    let included = ordered.reduce((acc, val) => acc.concat(val), []);
-    let rest = items.filter((item) => {
+    const ordered = PartialOrder.selectItems(items, order);
+    const included = ordered.reduce((acc, val) => acc.concat(val), []);
+    const rest = items.filter((item) => {
       return !included.includes(item);
     });
     return ordered.concat([rest]);
+  },
+
+  selectKeys: (keys, order) => {
+    return order.map((key) => {
+      if (Array.isArray(key)) {
+        return PartialOrder.selectKeys(keys, key);
+      } else {
+        return keys.includes(key) ? key : null;
+      }
+    }).filter(key => key != null)
+  },
+
+  flattenSoloGroups: (order) => {
+    return order.map((key) => {
+      if (Array.isArray(key)) {
+        if (key.length == 1) {
+          return key[0];
+        } else {
+          return key;
+        }
+      } else {
+        return key;
+      }
+    });
+  },
+
+  // Items is a list of tuples { "key": <key>, "description": <description> }
+  // Order is an arrangement of keys [ "first", "second" ]
+  // Returns a new order arranged according to the given order, with
+  //  the remaining item keys in an (embedded) list at the end.
+  encompassList: (items, order) => {
+    const keys = ListItems.keys(items);
+    const cleanOrder = PartialOrder.selectKeys(keys, order);
+    const included = cleanOrder.reduce((acc, val) => acc.concat(val), []);
+    const rest = keys.filter((key) => {
+      return !included.includes(key);
+    });
+    return PartialOrder.flattenSoloGroups(cleanOrder).concat([rest]);
   },
 
   removeItem: (order, index) => {
