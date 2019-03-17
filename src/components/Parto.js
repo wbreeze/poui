@@ -11,14 +11,10 @@ class Parto extends React.PureComponent {
 
   static propTypes = {
     itemList: PropTypes.array.isRequired,
-    parto: PropTypes.array,
+    parto: PropTypes.array.isRequired,
     orderedItemClick: PropTypes.func,
     unorderedItemClick: PropTypes.func,
   };
-
-  static defaultProps = {
-    parto: [],
-  }
 
   orderedItems() {
     return PartialOrder.arrangeItemsPerOrder(

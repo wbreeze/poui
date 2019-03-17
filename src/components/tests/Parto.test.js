@@ -2,16 +2,18 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import Parto from '../Parto';
 import ListItems from '../../ListItems';
+import PartialOrder from '../../PartialOrder';
 import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 
 describe('Parto', () => {
   let wrapper;
   const items = ListItemsFixtures.salad;
+  const itemsOrdering = PartialOrder.encompassItems(items, []);
 
   describe('shallow', () => {
     beforeEach(() => {
       wrapper = shallow(
-        <Parto itemList={items} />
+        <Parto itemList={items} parto={itemsOrdering} />
       );
     });
 
@@ -36,17 +38,18 @@ describe('Parto', () => {
     });
 
     it('places ordered items first in order', () => {
-      let parto = ['C','Z'];
+      const ordering = ['C','Z'];
+      const parto = PartialOrder.encompassItems(items, ordering);
       wrapper.setProps({ "itemList": items, "parto": parto }, () => {
         const olChild = wrapper.find('ol');
-        expect(olChild.children().length).toBe(parto.length + 1);
+        expect(olChild.children().length).toBe(ordering.length + 1);
         expect(olChild.find('ul').children().length).toBe(
-          items.length - parto.length);
+          items.length - ordering.length);
       });
     });
 
     it('places partial ordered items together', () => {
-      let parto = ['T','L',['M','P'],'A'];
+      let parto = PartialOrder.encompassItems(items, ['T','L',['M','P'],'A']);
       wrapper.setProps({ "itemList": items, "parto": parto }, () => {
         let ordering = wrapper.find('ol');
         let thirdItem = ordering.childAt(2);
@@ -69,6 +72,7 @@ describe('Parto', () => {
       wrapper = mount(
         <Parto
           itemList={items}
+          parto={itemsOrdering}
           orderedItemClick={orderedItemClick}
           unorderedItemClick={unorderedItemClick}
         />,

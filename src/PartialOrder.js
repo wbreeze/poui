@@ -1,29 +1,17 @@
 import ListItems from './ListItems';
 
 const PartialOrder = {
-  selectItems: (items, order) => {
+  // Items is a list of tuples { "key": <key>, "description": <description> }
+  // Order is an arrangement of keys [ "first", "second" ]
+  // Returns a list of tuples arranged according to the order.
+  arrangeItemsPerOrder: (items, order) => {
     return order.map((key) => {
       if (Array.isArray(key)) {
-        return PartialOrder.selectItems(items, key);
+        return PartialOrder.arrangeItemsPerOrder(items, key);
       } else {
         return ListItems.itemFor(items, key);
       }
-    }).filter((item) => {
-      return item !== null;
     });
-  },
-
-  // Items is a list of tuples { "key": <key>, "description": <description> }
-  // Order is an arrangement of keys [ "first", "second" ]
-  // Returns a list of tuples arranged according to the order, with
-  //  the remaining items in an (embedded) list at the end.
-  arrangeItemsPerOrder: (items, order) => {
-    const ordered = PartialOrder.selectItems(items, order);
-    const included = ordered.reduce((acc, val) => acc.concat(val), []);
-    const rest = items.filter((item) => {
-      return !included.includes(item);
-    });
-    return ordered.concat([rest]);
   },
 
   selectKeys: (keys, order) => {
@@ -54,7 +42,7 @@ const PartialOrder = {
   // Order is an arrangement of keys [ "first", "second" ]
   // Returns a new order arranged according to the given order, with
   //  the remaining item keys in an (embedded) list at the end.
-  encompassList: (items, order) => {
+  encompassItems: (items, order) => {
     const keys = ListItems.keys(items);
     const cleanOrder = PartialOrder.selectKeys(keys, order);
     const included = cleanOrder.reduce((acc, val) => acc.concat(val), []);
