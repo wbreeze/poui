@@ -158,4 +158,15 @@ arrange that good orderings get to the Props component. So we make the
 ![Raise item from bottom group](images/Etapa06Capture2.png)
 ![Raise item from internal group](images/Etapa06Capture3.png)
 
+## Implement lowering
+
+Now we can implement the reverse, where clicking on an item not in a group
+lowers it into a group with the item or grouped items immediately following.
+
+First we implement `lowerItem` in PartialOrder. This turns out to be
+a little bit of a messy bookeeping task. In addition, because we remove
+the matched key for possible insertion with a following group, or
+grouping with a following item, we have to code for a special case in which
+the matched key appears by itself at the end.
+
 

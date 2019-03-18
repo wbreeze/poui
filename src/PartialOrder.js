@@ -1,8 +1,8 @@
 import ListItems from './ListItems';
 
+// Items is a list of tuples { "key": <key>, "description": <description> }
+// Order is an arrangement of keys [ "first", "second" ]
 const PartialOrder = {
-  // Items is a list of tuples { "key": <key>, "description": <description> }
-  // Order is an arrangement of keys [ "first", "second" ]
   // Returns a list of tuples arranged according to the order.
   arrangeItemsPerOrder: (items, order) => {
     return order.map((key) => {
@@ -38,8 +38,6 @@ const PartialOrder = {
     });
   },
 
-  // Items is a list of tuples { "key": <key>, "description": <description> }
-  // Order is an arrangement of keys [ "first", "second" ]
   // Returns a new order arranged according to the given order, with
   //  the remaining item keys in an (embedded) list at the end.
   encompassItems: (items, order) => {
@@ -69,8 +67,7 @@ const PartialOrder = {
     }
   },
 
-  // Order is an arrangement of keys [ "first", "second" ]
-  // key is a key that we want to move out of a group
+  // Key is a key that we want to move out of a group
   // Return a new order with the given key positioned
   //   before the group, but after all or any that precede the group.
   // If the item is not part of a group, return the order unchanged.
@@ -80,15 +77,60 @@ const PartialOrder = {
   // raiseItem(['T','L',['M','P'],'A',['C','R','Z']], 'P')
   //   returns ['T','L','P','M','A',['C','R','Z']]
   raiseItem: (order, key) => {
-    const newOrder = order.map((item) => {
+    return order.map((item) => {
       if (Array.isArray(item)) {
         return PartialOrder.extractItem(item, key);
       } else {
         return item;
       }
     }).reduce((acc, val) => acc.concat(val), []);
+  },
+
+  // Key is a key that we want to lower into a group
+  // Return a new order with the given key positioned
+  //   within a group that follows, or in a new group
+  //   with the item that follows
+  // If the item is part of a group, return the order unchanged.
+  // Examples
+  // lowerItem(['T','L',['M','P'],'A','C'], 'L')
+  //   returns ['T',['L','M','P'],'A','C']
+  // lowerItem(['T','L',['M','P'],'A','C'], 'A')
+  //   returns ['T','L',['M','P'],['A','C']]
+  // lowerItem(['T','L',['M','P'],'A','C'], 'P')
+  //   returns ['T','L',['M','P'],'A','C']
+  // lowerItem(['T','L',['M','P'],'A','C'], 'Q')
+  //   returns ['T','L',['M','P'],'A','C']
+  // lowerItem(['T','L',['M','P'],'A','C'], 'C')
+  //   returns ['T','L',['M','P'],'A','C']
+  lowerItem: (order, key) => {
+    let keyPrecedes = false;
+    let newOrder = order.map((item) => {
+      if (Array.isArray(item)) {
+        if (keyPrecedes) {
+          keyPrecedes = false;
+          return [key].concat(item);
+        } else {
+          return item;
+        }
+      } else {
+        if (item === key) {
+          keyPrecedes = true;
+          return null;
+        } else {
+          if (keyPrecedes) {
+            keyPrecedes = false;
+            return [ key, item ];
+          } else {
+            return item;
+          }
+        }
+      }
+    }).filter(item => item !== null);
+    if (keyPrecedes) {
+      newOrder.push(key);
+    }
     return newOrder;
-  }
+  },
 }
 
 export default PartialOrder;
