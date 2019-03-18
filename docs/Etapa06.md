@@ -205,3 +205,20 @@ render only to the width of their content.
 Some more layout fiddling, perhaps using flex or grid, might help.
 
 ![Styling changes](images/Etapa06Capture6.png)
+
+## Next steps
+
+The interface is now functionally complete, in that it is useful to specify
+any ordering. Reordering items is possible, but presents a bit of a puzzle.
+For example, to switch the ordering of two items, you must:
+- lower the first item to be grouped with the second
+- raise the second item out of the group
+
+If you want to raise an item above a group, you have to:
+- expand the group by selecting all but the last item within it
+- raise the item wanted above each item that was in the group, in turn,
+  by using the group and ungroup trick.
+- lower the former group items back into a group
+
+Having the ability to drag an item to any location within the ordering
+will be a big help.
