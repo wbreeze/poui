@@ -169,4 +169,13 @@ the matched key for possible insertion with a following group, or
 grouping with a following item, we have to code for a special case in which
 the matched key appears by itself at the end.
 
+Second, we use the `lowerItem` function to implement an `orderedItemClick`
+in the SelectInOrder executive component.
+
+Now we can both raise and lower an item. Each is the reverse of the other.
+Clicking an item twice leaves the ordering unchanged.
+
+![Starting point](images/Etapa06Capture1.png)
+![Raise item from bottom group](images/Etapa06Capture4.png)
+![Lower the item back into the group](images/Etapa06Capture5.png)
 
