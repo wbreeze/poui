@@ -6,45 +6,58 @@ import PartoWithSelection from '../SelectInOrder';
 
 describe('SelectInOrder', () => {
   const itemList = ListItemsFixtures.salad;
+  const initialOrder = ['T','L',['M','P'],'A'];
   let wrapper;
 
   beforeEach(() => {
     wrapper = mount(
       <PartoWithSelection
         itemList={ itemList }
-        parto={ ['T','L',['M','P'],'A'] }
+        parto={ initialOrder }
       />
     );
   });
 
-  it('initializes the order with first selected item', () => {
-    let item = ListItems.itemFor(itemList, 'R');
-    let itemWrapper = wrapper.find({ itemKey: item.key })
+  it('raises first selected item', () => {
+    const item = ListItems.itemFor(itemList, 'R');
+    const itemWrapper = wrapper.find({ itemKey: item.key })
     itemWrapper.simulate("click");
-    let olWrapper = wrapper.find('.poui-parto-ol');
-    let lastOrderedItem = olWrapper.children().last();
-    expect(lastOrderedItem.text()).toEqual(item.description);
+    const olWrapper = wrapper.find('.poui-parto-ol');
+    const raisedItem = olWrapper.childAt(initialOrder.length)
+    expect(raisedItem.text()).toEqual(item.description);
   });
 
   it('moves a subsequent selected item to the end of the order', () => {
-    let first = ListItems.itemFor(itemList, 'R');
-    let second = ListItems.itemFor(itemList, 'Z');
+    const first = ListItems.itemFor(itemList, 'R');
+    const second = ListItems.itemFor(itemList, 'Z');
     wrapper.find({ itemKey: first.key }).simulate("click");
     wrapper.find({ itemKey: second.key }).simulate("click");
-    let olWrapper = wrapper.find('.poui-parto-ol');
-    let secondOrderedItem = olWrapper.children().last();
+    const olWrapper = wrapper.find('.poui-parto-ol');
+    const secondOrderedItem = olWrapper.childAt(initialOrder.length + 1);
     expect(secondOrderedItem.text()).toEqual(second.description);
   });
 
   it('does nothing when selecting an already ordered item', () => {
-    let first = ListItems.itemFor(itemList, 'R');
-    let second = ListItems.itemFor(itemList, 'Z');
+    const first = ListItems.itemFor(itemList, 'R');
+    const second = ListItems.itemFor(itemList, 'Z');
     wrapper.find({ itemKey: first.key }).simulate("click");
     wrapper.find({ itemKey: second.key }).simulate("click");
     wrapper.find({ itemKey: second.key }).simulate("click");
     wrapper.find({ itemKey: first.key }).simulate("click");
-    let olWrapper = wrapper.find('.poui-parto-ol');
-    let secondOrderedItem = olWrapper.children().last();
+    const olWrapper = wrapper.find('.poui-parto-ol');
+    const secondOrderedItem = olWrapper.childAt(initialOrder.length + 1);
     expect(secondOrderedItem.text()).toEqual(second.description);
+  });
+
+  it('raises item out of an internal group', () => {
+    const item = ListItems.itemFor(itemList, 'P');
+    const itemWrapper = wrapper.find({ itemKey: item.key });
+    itemWrapper.simulate("click");
+    const olWrapper = wrapper.find('.poui-parto-ol');
+    const extracted = olWrapper.childAt(2);
+    const ungrouped = olWrapper.childAt(3);
+    const ungroupedItem = ListItems.itemFor(itemList, 'M');
+    expect(extracted.text()).toEqual(item.description);
+    expect(ungrouped.text()).toEqual(ungroupedItem.description);
   });
 });

@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import Parto from './Parto';
+import React, { Component } from "react";
+import Parto from "./Parto";
+import PartialOrder from "../PartialOrder";
 
 const PartoWithSelection = withSelection(Parto);
 
@@ -7,16 +8,16 @@ function withSelection(Parto) {
   class WithSelection extends Component {
     constructor(props) {
       super(props);
+      const ordering = props.parto || [];
       this.unorderedSelected = this.unorderedSelected.bind(this);
       this.state = {
-        ordering: props.parto || [],
+        ordering: PartialOrder.encompassItems(props.itemList, ordering),
       };
     }
 
     unorderedSelected(key) {
-      this.setState({
-        ordering: [...this.state.ordering, key],
-      });
+      const updatedOrdering = PartialOrder.raiseItem(this.state.ordering, key);
+      this.setState({ ordering: updatedOrdering });
     }
 
     render() {
