@@ -179,3 +179,29 @@ Clicking an item twice leaves the ordering unchanged.
 ![Raise item from bottom group](images/Etapa06Capture4.png)
 ![Lower the item back into the group](images/Etapa06Capture5.png)
 
+You might have noted that the position of "Remolacha" is not the same in the
+first and third screen shot. Both orderings are equivalent, however.
+If we wanted to preserve ordering within the unordered groups, we could
+add some state to the Parto component which tracks these orderings.
+Whether this feature would be helpful is a question. We'll delay doing
+that.
+
+## Styling
+
+The appearance of the partial ordering is spartan. That it takes-up the
+entire width of its container is troublesome.
+
+- limit the overall width to a maximum.
+- place visual grouping around the groups
+- eliminate the bullets from the groups
+- round the corners of the item and group borders
+- lighten the border of the items
+- lighten the item backgrounds when hovered
+
+We tried vertically aligning the numbers (`vertical-align: middle`);
+however, that meant making the
+`<ul>` groups display as `inline-block`. As an `inline-block` the groups
+render only to the width of their content.
+Some more layout fiddling, perhaps using flex or grid, might help.
+
+![Styling changes](images/Etapa06Capture6.png)
