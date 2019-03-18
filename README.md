@@ -3,12 +3,14 @@ This is a project to develop a user interface for specifying partial orders.
 A "partial order" is simply an ordering of things in which some items
 share the same position in the ordering.
 
+![PartialOrder](docs/images/Etapa06Capture6.png)
+
 Refer to the `docs` directory for
 [an initial design document](docs/OriginalDesign.md).
 
 ## Usage
 
-The package will be available in the Node.js package repository as,
+The package is available in the Node.js package repository as,
 "[poui](https://www.npmjs.com/package/poui)."
 
 Use your package manager to install it.
