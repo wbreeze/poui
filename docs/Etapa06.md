@@ -10,9 +10,9 @@
 In this stage we'll develop some more of the click behavior on items.
 We would like the behavior to be consistent and reversible.
 
-Right now we have the not yet ordered items as "the rest", in an
+Right now we have "the rest" in an
 unordered list rendered at the bottom of the ordering. Clicking one
-of them places them last in the order above.
+of them places it last in the order above.
 
 We can generalize this to clicking an unordered item in any place
 within the order. Clicking the item raises it to last before the
@@ -79,13 +79,7 @@ Clicking 'P' again transforms to
 ```['T','L',['M','P'],'A','R',['C','Z']]```
 
 Clicking 'R' transforms to
-```['T','L',['M','P'],'A',['C','R','Z']]```
-
-or
-
 ```['T','L',['M','P'],'A',['C','Z','R']]```
-
-(It's the grouping that matters)
 
 This is what we'll do.
 
@@ -124,7 +118,7 @@ There's a disconnect between the value of the `parto` property
 and the content of the list itself. Recall that the `parto` property
 is the property that we use to specify the ordering of the list items.
 It uses a shorthand that leaves-out the unordered items at the end of
-the list. For example, `[]` designates nothing ordered.
+the list. For example, "`[]`" designates nothing ordered.
 
 Now we are using the `raiseItem` method to move elements up. We apply it
 to the shorthand order specification. That shorthand does not
@@ -132,7 +126,7 @@ have the key for the item we want to raise when that item is in "the rest".
 Attempting to raise an item from "the rest" fails.
 
 One possible solution would be not to separate the order specification
-from the ordered items. We've gotte a lot of benefit from keeping the
+from the ordered items. We've gotten a lot of benefit from keeping the
 order as a separate concern, however. The functions in the `PartialOrder'
 for example would be much more complicated if they had to reach inside
 of items to identify and move them.
@@ -159,3 +153,9 @@ We opt for the second, because it's really nice that the `arrangeItemsPerOrder`
 method can be straightforward, fast, simple. Other than this default, we can
 arrange that good orderings get to the Props component. So we make the
 `parto` property a required one.
+
+![Starting point](images/Etapa06Capture1.png)
+![Raise item from bottom group](images/Etapa06Capture2.png)
+![Raise item from internal group](images/Etapa06Capture3.png)
+
+
