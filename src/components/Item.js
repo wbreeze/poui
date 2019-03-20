@@ -17,9 +17,16 @@ class Item extends React.PureComponent {
   }
 
   render() {
+    const { itemLabel, itemKey, onClickEvent, className, ...rest } = this.props;
+    let itemClass = 'poui-item';
+    if (typeof className !== 'undefined') {
+      let classes = className.split(' ');
+      classes.push(itemClass);
+      itemClass = classes.join(' ');
+    }
     return (
-      <li className="poui-item" onClick={this.clickHandler}>
-        { this.props.itemLabel }
+      <li onClick={this.clickHandler} className={itemClass} {...rest} >
+        { itemLabel }
       </li>
     );
   }
