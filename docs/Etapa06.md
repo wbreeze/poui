@@ -222,3 +222,5 @@ If you want to raise an item above a group, you have to:
 
 Having the ability to drag an item to any location within the ordering
 will be a big help.
+
+- [Etapa07](Etapa07.md) Add drag and drop.
