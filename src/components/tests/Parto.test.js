@@ -65,16 +65,19 @@ describe('Parto', () => {
   describe('deep', () => {
     let unorderedItemClick;
     let orderedItemClick;
+    let itemReorder;
 
     beforeEach(() => {
       unorderedItemClick = jest.fn(() => {});
       orderedItemClick = jest.fn(() => {});
+      itemReorder = jest.fn(() => {});
       wrapper = mount(
         <Parto
           itemList={items}
           parto={itemsOrdering}
           orderedItemClick={orderedItemClick}
           unorderedItemClick={unorderedItemClick}
+          itemReorder={itemReorder}
         />,
       );
     });
@@ -95,16 +98,38 @@ describe('Parto', () => {
       expect(unorderedItemClick.mock.calls.length).toBe(1);
     });
 
-    it('calls our injected unorderedItemClick function on embedded group',
-      () => {
-        let key = 'P';
-        let parto = ['T','L',['M','P'],'A','R'];
+    describe('partially ordered', () => {
+      beforeEach(() => {
+        let parto = PartialOrder.encompassItems(
+          items, ['T','L',['M','P'],'A','R']);
         wrapper.setProps({ "parto": parto });
-        let itemWrapper = wrapper.find({ itemKey: key })
-        itemWrapper.simulate('click');
-        expect(unorderedItemClick.mock.calls.length).toBe(1);
-      }
-    );
+      });
 
+      it('calls our injected unorderedItemClick function on embedded group',
+        () => {
+          let key = 'P';
+          let itemWrapper = wrapper.find({ itemKey: key })
+          itemWrapper.simulate('click');
+          expect(unorderedItemClick.mock.calls.length).toBe(1);
+        }
+      );
+
+      it('calls our reorder function on drop', () => {
+        let sourceKey = 'M';
+        let destKey = 'P';
+        let itemWrapper = wrapper.find({ itemKey: destKey })
+        let mockEvent = {
+          dataTransfer: {
+            getData: (ev) => {
+              return sourceKey;
+            },
+          },
+        };
+        itemWrapper.simulate('drop', mockEvent);
+        expect(itemReorder.mock.calls.length).toBe(1);
+        expect(itemReorder.mock.calls[0][0]).toEqual(sourceKey);
+        expect(itemReorder.mock.calls[0][1]).toEqual(destKey);
+      });
+    });
   });
 });

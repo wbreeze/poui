@@ -4,9 +4,14 @@ import Item from "./Item"
 import PartialOrder from "../PartialOrder";
 
 class Parto extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
   static defaultProps = {
     orderedItemClick: () => {},
     unorderedItemClick: () => {},
+    itemReorder: () => {},
   }
 
   static propTypes = {
@@ -14,6 +19,7 @@ class Parto extends React.PureComponent {
     parto: PropTypes.array.isRequired,
     orderedItemClick: PropTypes.func,
     unorderedItemClick: PropTypes.func,
+    itemReorder: PropTypes.func,
   };
 
   orderedItems() {
@@ -21,13 +27,44 @@ class Parto extends React.PureComponent {
       this.props.itemList, this.props.parto);
   }
 
+  startDragging(ev, item) {
+    ev.dataTransfer.setData("text/plain", item.description);
+    ev.dataTransfer.setData("key", item.key);
+    ev.dataTransfer.effectAllowed = "move";
+  }
+
+  isDropBefore(ev) {
+    const targetItem = ev.currentTarget;
+    const rect = targetItem.getBoundingClientRect();
+    const position = Math.round(ev.clientY - rect.top);
+    const midpoint = Math.round(rect.height / 2);
+    return (position < midpoint);
+  }
+
+  dragOver(ev, item) {
+    const key = ev.dataTransfer.getData("key");
+    if (key != item.key) {
+      ev.preventDefault();
+    }
+  }
+
+  dropped(ev, item) {
+    ev.preventDefault();
+    const key = ev.dataTransfer.getData("key");
+    this.props.itemReorder(key, item.key, this.isDropBefore(ev));
+  }
+
   renderItem(item, onClickEvent) {
-    return (
+    return(
       <Item
         key={item.key}
         itemKey={item.key}
         itemLabel={item.description}
         onClickEvent={onClickEvent}
+        draggable
+        onDragStart={(e) => this.startDragging(e, item)}
+        onDragOver={(e) => this.dragOver(e, item)}
+        onDrop={(e) => this.dropped(e, item)}
       />
     );
   }

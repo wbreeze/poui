@@ -9,14 +9,12 @@
 ## Add drag and drop
 
 In this stage we'll develop the initial drag and drop ability.
-The goal is to enable a dragged item to be dropped:
-- in-between items to reorder it
-- on another item to create a group with it
-- on a group to add it to the group
+The goal is to enable a dragged item to be dropped.
+Looking at the spec, dragging is only related to reordering items.
+It doesn't create groups nor place items in groups.
+Thus we want to drag in-between items to reorder them.
 
 The item can be dragged whether it is by itself or in a group.
-The position within a group is immaterial. We'll add it to the top
-or bottom of the group, whichever is convenient.
 
 We're greatful for
 [this post on Medium from freeCodeCamp](https://medium.freecodecamp.org/reactjs-implement-drag-and-drop-feature-without-using-external-libraries-ad8994429f1a)
@@ -65,4 +63,31 @@ including any injected `onDragStart` event on the list item. It isn't
 including any injected class names.
 We update the render method of the Item component to strip expected
 properties, groom the class name, and pass along remaining properties.
+
+We have the Parto component inject the `draggable` property and an
+`onDragStart` event handler into the Item component. The handler sets
+the item key on the `onDragStart` event dataTransfer object.
+
+With that much, an image of the item animates under the cursor when
+dragging an item.
+
+### Drop
+
+We add `onDragOver` and `onDrop` event handlers on the items.
+First, we just look at the events by logging them to the console.
+With much fussing, we work out how to identify the location of the
+dragged item (cursor) relative to the drop target and implement
+the needed event callbacks in the Parto component.
+
+The `dragOver` events come fast and furious. We'll learn how to
+limit them. For now, all we need to do is check whether the target is
+a different item and call `ev.preventDefault()`.
+
+On drop, we work-out the position of the drop in the top or bottom
+half of the item, then invoke a new callback, `itemReorder` with the key
+of the item dropped, key of the item dropped upon, and whether the
+drop was in the before or after part (vertically) of the item dropped
+upon.
+
+It all turned-out to be very little (hard won) code. But it isn't over.
 
