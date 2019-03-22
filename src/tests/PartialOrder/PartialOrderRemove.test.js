@@ -1,24 +1,49 @@
 import PartialOrder from '../../PartialOrder';
-import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 
 describe('PartialOrder removeItem', () => {
-  it('removes first item from three', () => {
-    expect(PartialOrder.removeItem(['A','B','C'], 0)).toEqual(['B','C']);
+  const testOrder = ['T','L',['M','P'],'A',['C','R','Z']];
+
+  it('returns given order when key not found', () => {
+    const order = PartialOrder.removeItem(testOrder, 'X');
+    expect(order).toEqual(testOrder);
   });
 
-  it('removes second item from three', () => {
-    expect(PartialOrder.removeItem(['A','B','C'], 1)).toEqual(['A','C']);
+  it('removes item found by itself', () => {
+    const order = PartialOrder.removeItem(testOrder, 'L');
+    expect(order).toEqual(['T',['M','P'],'A',['C','R','Z']]);
   });
 
-  it('removes third item from three', () => {
-    expect(PartialOrder.removeItem(['A','B','C'], 2)).toEqual(['A','B']);
+  it('removes first item', () => {
+    const order = PartialOrder.removeItem(testOrder, 'T');
+    expect(order).toEqual(['L',['M','P'],'A',['C','R','Z']]);
   });
 
-  it('flattens when item is first of two', () => {
-    expect(PartialOrder.removeItem(['A','B'], 0)).toEqual('B');
+  it('removes item from middle of a group', () => {
+    const order = PartialOrder.removeItem(testOrder, 'R');
+    expect(order).toEqual(['T','L',['M','P'],'A',['C','Z']]);
   });
 
-  it('flattens when item is second of two', () => {
-    expect(PartialOrder.removeItem(['A','B'], 1)).toEqual('A');
+  it('removes item from first of a group', () => {
+    const order = PartialOrder.removeItem(testOrder, 'C');
+    expect(order).toEqual(['T','L',['M','P'],'A',['R','Z']]);
+  });
+
+  it('removes item from last of a group', () => {
+    const order = PartialOrder.removeItem(testOrder, 'Z');
+    expect(order).toEqual(['T','L',['M','P'],'A',['C','R']]);
+  });
+
+  it('disolves group when second to last item removed from group', () => {
+    const order = PartialOrder.removeItem(testOrder, 'P');
+    expect(order).toEqual(['T','L','M','A',['C','R','Z']]);
+  });
+
+  it('leaves groups intact when item in-between removed', () => {
+    const order = PartialOrder.removeItem(testOrder, 'A');
+    expect(order).toEqual(['T','L',['M','P'],['C','R','Z']]);
+  });
+
+  it('returns an empty order given an empty order', () => {
+    expect(PartialOrder.removeItem([], 'A')).toEqual([]);
   });
 });
