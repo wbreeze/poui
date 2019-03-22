@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "jest",
-    "dev" : "jest --watch",
+    "dev": "jest --watch",
     "serve": "parcel public/index.html",
     "watch": "parcel watch public/index.html",
     "build": "parcel build public/index.html"
@@ -39,7 +39,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "jest": "^24.3.1",
-    "parcel-bundler": "^1.12.0",
+    "parcel-bundler": "^1.12.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   },
