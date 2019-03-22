@@ -57,4 +57,33 @@ describe('SelectInOrder', () => {
     const firstUnordered = firstGroup.children().first();
     expect(firstUnordered.text()).toEqual(item.description);
   });
+
+  it('reorders when item dropped on a different one', () => {
+    let sourceKey = 'L';
+    let destKey = 'A';
+    let mockEvent = {
+      clientY: 0,
+      dataTransfer: {
+        getData: (_) => {
+          return sourceKey;
+        },
+      },
+    };
+    let itemWrapper = wrapper.find({ itemKey: destKey })
+    let domNode = itemWrapper.getDOMNode();
+    Object.defineProperty(domNode, "getBoundingClientRect", {
+      value: () => {
+        return { top: 0, height: 4 }
+      },
+      writeable: false,
+    });
+    itemWrapper.simulate('drop', mockEvent);
+    const orderedList = wrapper.find('.poui-parto-ol');
+    const itemT = ListItems.itemFor(itemList, 'T');
+    expect(orderedList.childAt(0).text()).toEqual(itemT.description);
+    const itemL = ListItems.itemFor(itemList, 'L');
+    expect(orderedList.childAt(2).text()).toEqual(itemL.description);
+    const itemA = ListItems.itemFor(itemList, 'A');
+    expect(orderedList.childAt(3).text()).toEqual(itemA.description);
+  });
 });

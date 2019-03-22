@@ -16,17 +16,21 @@ Thus we want to drag in-between items to reorder them.
 
 The item can be dragged whether it is by itself or in a group.
 
-We're greatful for
-[this post on Medium from freeCodeCamp](https://medium.freecodecamp.org/reactjs-implement-drag-and-drop-feature-without-using-external-libraries-ad8994429f1a)
-This overview of the
+We're greatful for:
+- [this post on Medium from freeCodeCamp](https://medium.freecodecamp.org/reactjs-implement-drag-and-drop-feature-without-using-external-libraries-ad8994429f1a)
+- This overview of the
 [drag and drop api](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API)
 of HTML, from Mozilla, is also quite helpful.
+- There's a nice
+[article about testing](https://reactjsnews.com/testing-drag-and-drop-components-in-react-js)
+on ReactJS News. It doesn't use Enzyme, but provides the approach and
+good ideas.
 
 The plan is to implement all of the state management and interaction
-within the Parto component, and provide a high-level abstract event
+within the Parto component and provide a high-level abstract event
 to fire upon reordering. We're not sure how we'll highlight the drop
-target visually, especially the in-between targets. It's clear that we'll
-be adding and removing class values on the elements and allowing CSS
+target visually. The plan is to add and remove
+class values on the elements and allow CSS
 to do the work of highlighting, which will make the highlight behavior
 configurable.
 
@@ -91,3 +95,33 @@ upon.
 
 It all turned-out to be very little (hard won) code. But it isn't over.
 
+### Implement the callback in the SelectInOrder component.
+
+Now we have the user interface doing a rudimentary drag and drop.
+Let's have the SelectInOrder component implement a callback that
+effects the change.
+
+That callback will use the PartialOrder methods to effect the change
+to the order. We implement a `moveItem` function there.
+
+In doing so, we find that we want to first remove the item from the
+order. We already have a `removeItem` method, but that method is meant
+to do a shallow removal from an embedded group. We rename it as
+`shallowRemoveItem`, refactor the tests, and add (and test) a new
+`removeItem` method.
+
+The other function we want in PartialOrder is `insertItem`,
+because we implement `moveItem` by first removing, then inserting.
+
+Another method that we add is `flatten`, which reduces the depth
+of grouping by one. It's a one-liner, but we were repeating the one-liner
+in multiple places. Now it's a tested function.
+
+At last, implementing the drop behavior in the SelectInOrder component,
+the test involves a great deal of troublesome setup- mocking the
+drop event, and with JSDOM, faking the size of the drop zone by
+finding the DOM component and injecting a `getBoundingClientRect` method
+into it that returns fixed values. We only write one.
+
+The drag and drop functions now, but without any meaningful feedback,
+during drag, about what will happen.

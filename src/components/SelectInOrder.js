@@ -11,6 +11,7 @@ function withSelection(Parto) {
       const ordering = props.parto || [];
       this.unorderedSelected = this.unorderedSelected.bind(this);
       this.orderedSelected = this.orderedSelected.bind(this);
+      this.itemReorder = this.itemReorder.bind(this);
       this.state = {
         ordering: PartialOrder.encompassItems(props.itemList, ordering),
       };
@@ -26,11 +27,18 @@ function withSelection(Parto) {
       this.setState({ ordering: updatedOrdering });
     }
 
+    itemReorder(subject, target, before) {
+      const updatedOrdering = PartialOrder.moveItem(this.state.ordering,
+        subject, target, before);
+      this.setState({ ordering: updatedOrdering });
+    }
+
     render() {
       const props = {...this.props,
         parto: this.state.ordering,
         unorderedItemClick: this.unorderedSelected,
         orderedItemClick: this.orderedSelected,
+        itemReorder: this.itemReorder,
       }
       return <Parto {...props} />;
     }
