@@ -4,6 +4,14 @@ import Item from "./Item"
 import PartialOrder from "../PartialOrder";
 
 class Parto extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dragOver: '',
+      dragBefore: null,
+    }
+  };
+
   static defaultProps = {
     orderedItemClick: () => {},
     unorderedItemClick: () => {},
@@ -43,9 +51,30 @@ class Parto extends React.Component {
 
   dragOver(ev, item) {
     const key = ev.dataTransfer.getData("key");
-    if (key != item.key) {
+    const dragBefore = this.isDropBefore(ev);
+    if (
+      key !== item.key &&
+      (item.key !== this.state.dragOver || dragBefore !== this.state.dragBefore)
+    ) {
+      const target = ev.currentTarget;
+      let classList = target.classList;
+      if (dragBefore) {
+        classList.remove('poui-item-dragover-after');
+        classList.add('poui-item-dragover-before');
+      } else {
+        classList.remove('poui-item-dragover-before');
+        classList.add('poui-item-dragover-after');
+      }
+      console.log("ITEM CLASS " + ev.currentTarget.className);
+      this.setState({ dragOver: item.key, dragBefore: dragBefore });
       ev.preventDefault();
     }
+  }
+
+  dragLeave(ev) {
+    let classList = ev.currentTarget.classList;
+    classList.remove('poui-item-dragover-before');
+    classList.remove('poui-item-dragover-after');
   }
 
   dropped(ev, item) {
@@ -65,6 +94,7 @@ class Parto extends React.Component {
         onDragStart={(e) => this.startDragging(e, item)}
         onDragOver={(e) => this.dragOver(e, item)}
         onDrop={(e) => this.dropped(e, item)}
+        onDragLeave={this.dragLeave}
       />
     );
   }
