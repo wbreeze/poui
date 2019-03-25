@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import Item from "./Item"
 import PartialOrder from "../PartialOrder";
 
-class Parto extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
+class Parto extends React.Component {
   static defaultProps = {
     orderedItemClick: () => {},
     unorderedItemClick: () => {},
@@ -21,6 +17,10 @@ class Parto extends React.PureComponent {
     unorderedItemClick: PropTypes.func,
     itemReorder: PropTypes.func,
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return(nextProps.parto !== this.props.parto);
+  }
 
   orderedItems() {
     return PartialOrder.arrangeItemsPerOrder(

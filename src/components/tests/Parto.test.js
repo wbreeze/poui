@@ -60,6 +60,13 @@ describe('Parto', () => {
         expect(embeddedGroup.exists({ itemKey: 'P' }));
       });
     });
+
+    it('will not update if order has not changed', () => {
+      const scu = wrapper.instance().shouldComponentUpdate({
+        parto: itemsOrdering,
+      });
+      expect(scu).toBe(false);
+    });
   });
 
   describe('deep', () => {
