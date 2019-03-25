@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-class Item extends React.PureComponent {
+class Item extends React.Component {
   static defaultProps = {
     onClickEvent: () => {},
   }
@@ -10,6 +10,14 @@ class Item extends React.PureComponent {
     itemLabel: PropTypes.node.isRequired,
     itemKey: PropTypes.string.isRequired,
     onClickEvent: PropTypes.func,
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return(
+      nextProps.itemKey !== this.props.itemKey ||
+      nextProps.itemLabel !== this.props.itemLabel ||
+      nextProps.className !== this.props.className
+    );
   }
 
   clickHandler = (e) => {

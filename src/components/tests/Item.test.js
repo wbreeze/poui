@@ -4,17 +4,18 @@ import Item from '../Item';
 
 describe('Item component', () => {
   let wrapper;
-  let clickBehavior;
+  const clickBehavior = jest.fn(() => {});
+  const onDragStart = jest.fn(() => {});
   const itemLabel = 'Ordered item';
   const itemKey = 'K';
 
   beforeEach(() => {
-    clickBehavior = jest.fn(() => {});
     wrapper = shallow(
       <Item
         itemKey={itemKey}
         itemLabel={itemLabel}
         onClickEvent={clickBehavior}
+        onDragStart={onDragStart}
       />,
     );
   });
@@ -43,11 +44,14 @@ describe('Item component', () => {
   });
 
   it('applies injected event to <li>', () => {
-    const onDragStart = jest.fn(() => {});
-    wrapper.setProps({"onDragStart":onDragStart}, () => {
-      const li = wrapper.find('li');
-      wrapper.simulate('dragStart');
-      expect(onDragStart.mock.calls.length).toBe(1);
-    });
+    const li = wrapper.find('li');
+    wrapper.simulate('dragStart');
+    expect(onDragStart.mock.calls.length).toBe(1);
+  });
+
+  it('does not update if item has not changed', () => {
+    const props = {itemKey: itemKey, itemLabel: itemLabel};
+    const scu = wrapper.instance().shouldComponentUpdate(props, null);
+    expect(scu).toBe(false);
   });
 });

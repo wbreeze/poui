@@ -125,3 +125,96 @@ into it that returns fixed values. We only write one.
 
 The drag and drop functions now, but without any meaningful feedback,
 during drag, about what will happen.
+
+### Implement preview on drag
+
+We place the current ordering in the state of the Parto component,
+copying it originally from the props. We replace the ordering from
+props with that from the state, in particular in the `orderedItems` method.
+
+Then in the `dragOver` handler we update the state using PartialOrder
+to get an updated order.
+
+This causes some visual feedback. The ordering alters during the drag,
+cool. It's a bit subtle. More is needed.
+
+However it also doesn't work. For one thing, when we drop outside of
+any drop zone, the ordering doesn't reset to what it was before the
+drag. The `dropped` event isn't called, nor the `itemReorder` handler.
+This means that the state of the Parto component is now out of synch
+with the state in the parent SelectInOrder component.
+
+We attempt to repair the synchronization problem by resetting the
+state to the props at the end of the drag.
+
+This works well enough when it's called, but it isn't always being
+called. We fear that the event is sometimes dropped.
+
+### Attempt to throttle
+
+The React FAQ's discuss
+[throttling](https://reactjs.org/docs/faq-functions.html#throttle)
+some handlers. Let's try it. It uses a dependency called `lodash.throttle`,
+which we install.
+
+Doing this, we start getting "you're accessing the property `dataTransfer`
+on a released/nullified synthetic event" in the console.
+We try `debounce` with the same effect.
+
+### Ensure React reconciles only when necessary
+
+The React documentation, under the heading of optimizing performance, has
+[recommendation](https://reactjs.org/docs/optimizing-performance.html#avoid-reconciliation)
+to prevent DOM reconciliation when the state of a component
+has not changed.
+
+When we watched the update highlighting using the React development tools
+plugin, we saw the entire Parto component and Item components updating
+repeatedly during dragOver events, when there was absolutely no need to
+update, because nothing had changed from the prior event.
+
+Repairing this might help. We undertake to implement and test
+`shouldComponentUpdate` methods to address it.
+
+Testing requires digging into the component lifecycle and seeing that
+[we see that](https://reactjs.org/docs/react-component.html#updating)
+after calling `shouldComponentUpdate`, if permitted, React will first
+call `render` and later call `componentDidUpdate`. We'll spy on both
+and see that they aren't called when we don't want them called.
+
+Jest provides a rich capability for preparing mocks, but what we really
+want is spies. For this we add `sinon` as a dev dependency for spying
+on the methods called within the component. Quickly, however, given
+```
+const spy = sinon.spy(Item.prototype, 'componentDidUpdate');
+```
+
+we get "Attempted to wrap undefined property componentDidUpdate as function"
+from the spy.
+
+Poking around, it seems better to simply test the `shouldComponentUpdate`
+function and trust that React is doing the life cycle calls as documented,
+not updating when shouldComponentUpdate returns false. So we can back out of
+using sinon and spies and all of that fancyness.
+
+Doing so, we get a warning from React about overriding `shouldComponentUpdate`
+on a component derived from React.PureComponent.
+```
+Warning: Item has a method called shouldComponentUpdate().
+shouldComponentUpdate should not be used when extending React.PureComponent.
+Please extend React.Component if shouldComponentUpdate is used.
+```
+
+For curiosity, we check whether the sinon spy will work once we extend
+React.Component in place of React.PureComponent. It does not.
+
+Implementing `shouldComponentUpdate` can be a two edged sword. One of our
+tests broke because we attempted to inject the `onDragStart` event by
+updating props in the test. Because `shouldComponentUpdate` now returns
+false in that case, the new, injected DOM event callback isn't rendered.
+
+Modifying the callbacks of a rendered component isn't something we'll be
+doing, but it's also something that, with our `shouldComponentUpdate`,
+will no longer work. We went ahead and updated the test.
+
+
