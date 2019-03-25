@@ -13,10 +13,9 @@ describe('Item component', () => {
     wrapper = shallow(
       <Item
         itemKey={itemKey}
-        itemLabel={itemLabel}
         onClickEvent={clickBehavior}
         onDragStart={onDragStart}
-      />,
+      > {itemLabel} </Item>,
     );
   });
 
@@ -24,8 +23,8 @@ describe('Item component', () => {
     expect(wrapper.type()).toBe('li');
   });
 
-  it('uses itemLabel as its child', () => {
-    expect(wrapper.find('li').text()).toBe(itemLabel);
+  it('uses supplied children <li> children', () => {
+    expect(wrapper.find('li').text().trim()).toBe(itemLabel);
   });
 
   it('calls our injected clickBehavior function on click', () => {
@@ -49,8 +48,8 @@ describe('Item component', () => {
     expect(onDragStart.mock.calls.length).toBe(1);
   });
 
-  it('does not update if item has not changed', () => {
-    const props = {itemKey: itemKey, itemLabel: itemLabel};
+  it('does not update if key has not changed', () => {
+    const props = {itemKey: itemKey};
     const scu = wrapper.instance().shouldComponentUpdate(props, null);
     expect(scu).toBe(false);
   });

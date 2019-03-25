@@ -7,7 +7,6 @@ class Item extends React.Component {
   }
 
   static propTypes = {
-    itemLabel: PropTypes.node.isRequired,
     itemKey: PropTypes.string.isRequired,
     onClickEvent: PropTypes.func,
   }
@@ -15,7 +14,6 @@ class Item extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return(
       nextProps.itemKey !== this.props.itemKey ||
-      nextProps.itemLabel !== this.props.itemLabel ||
       nextProps.className !== this.props.className
     );
   }
@@ -25,7 +23,7 @@ class Item extends React.Component {
   }
 
   render() {
-    const { itemLabel, itemKey, onClickEvent, className, ...rest } = this.props;
+    const { itemKey, children, onClickEvent, className, ...rest } = this.props;
     let itemClass = 'poui-item';
     if (typeof className !== 'undefined') {
       let classes = className.split(' ');
@@ -34,7 +32,7 @@ class Item extends React.Component {
     }
     return (
       <li onClick={this.clickHandler} className={itemClass} {...rest} >
-        { itemLabel }
+        { children }
       </li>
     );
   }
