@@ -5,9 +5,6 @@ share the same position in the ordering.
 
 ![PartialOrder](docs/images/Etapa06Capture6.png)
 
-Refer to the `docs` directory for
-[an initial design document](docs/OriginalDesign.md).
-
 ## Usage
 
 The package is available in the Node.js package repository as,
@@ -51,6 +48,7 @@ For details, browse the components using an inspector, or view the
 component render methods of the components in the source tree.
 
 ## Etapas
+
 The project is developed in stages, or "etapas," each with a
 description of the work carried out in the stage. The work descriptions are
 in the docs directory as markdown documents with the name of the stage,
@@ -67,4 +65,5 @@ to Etapa02.
 1. [Etapa04](docs/Etapa04.md) Add interaction to select items in order.
 1. [Etapa05](docs/Etapa05.md) Support full partial order.
 1. [Etapa06](docs/Etapa06.md) Add item click interaction for partial order.
+1. [Etapa07](docs/Etapa07.md) Add drag and drop.
 
