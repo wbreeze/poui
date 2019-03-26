@@ -24,7 +24,7 @@ describe('SelectInOrder', () => {
     itemWrapper.simulate("click");
     const olWrapper = wrapper.find('.poui-parto-ol');
     const raisedItem = olWrapper.childAt(initialOrder.length)
-    expect(raisedItem.text()).toEqual(item.description);
+    expect(raisedItem.text().trim()).toEqual(item.description);
   });
 
   it('moves a subsequent selected item to the end of the order', () => {
@@ -34,7 +34,7 @@ describe('SelectInOrder', () => {
     wrapper.find({ itemKey: second.key }).simulate("click");
     const olWrapper = wrapper.find('.poui-parto-ol');
     const secondOrderedItem = olWrapper.childAt(initialOrder.length + 1);
-    expect(secondOrderedItem.text()).toEqual(second.description);
+    expect(secondOrderedItem.text().trim()).toEqual(second.description);
   });
 
   it('raises item out of an internal group', () => {
@@ -45,8 +45,8 @@ describe('SelectInOrder', () => {
     const extracted = olWrapper.childAt(2);
     const ungrouped = olWrapper.childAt(3);
     const ungroupedItem = ListItems.itemFor(itemList, 'M');
-    expect(extracted.text()).toEqual(item.description);
-    expect(ungrouped.text()).toEqual(ungroupedItem.description);
+    expect(extracted.text().trim()).toEqual(item.description);
+    expect(ungrouped.text().trim()).toEqual(ungroupedItem.description);
   });
 
   it('reverses when item clicked twice', () => {
@@ -55,7 +55,7 @@ describe('SelectInOrder', () => {
     wrapper.find({ itemKey: item.key }).simulate("click");
     const firstGroup = wrapper.find('.poui-parto-ul').first();
     const firstUnordered = firstGroup.children().first();
-    expect(firstUnordered.text()).toEqual(item.description);
+    expect(firstUnordered.text().trim()).toEqual(item.description);
   });
 
   it('reorders when item dropped on a different one', () => {
@@ -77,13 +77,14 @@ describe('SelectInOrder', () => {
       },
       writeable: false,
     });
+    itemWrapper.simulate('dragOver', mockEvent);
     itemWrapper.simulate('drop', mockEvent);
     const orderedList = wrapper.find('.poui-parto-ol');
     const itemT = ListItems.itemFor(itemList, 'T');
-    expect(orderedList.childAt(0).text()).toEqual(itemT.description);
+    expect(orderedList.childAt(0).text().trim()).toEqual(itemT.description);
     const itemL = ListItems.itemFor(itemList, 'L');
-    expect(orderedList.childAt(2).text()).toEqual(itemL.description);
+    expect(orderedList.childAt(2).text().trim()).toEqual(itemL.description);
     const itemA = ListItems.itemFor(itemList, 'A');
-    expect(orderedList.childAt(3).text()).toEqual(itemA.description);
+    expect(orderedList.childAt(3).text().trim()).toEqual(itemA.description);
   });
 });

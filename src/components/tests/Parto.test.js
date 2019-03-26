@@ -31,9 +31,9 @@ describe('Parto', () => {
       let labels = [];
       wrapper.find('ul').children().forEach((node) => {
         expect(node.text()).toEqual('<Item />');
-        labels.push(node.prop('itemLabel'));
+        labels.push(node.prop('itemKey'));
       });
-      let expectedLabels = ListItems.descriptions(items);
+      let expectedLabels = ListItems.keys(items);
       expect(labels.sort()).toEqual(expectedLabels.sort());
     });
 
@@ -64,8 +64,38 @@ describe('Parto', () => {
     it('will not update if order has not changed', () => {
       const scu = wrapper.instance().shouldComponentUpdate({
         parto: itemsOrdering,
-      });
+      }, { dragOver: '', dragBefore: null });
       expect(scu).toBe(false);
+    });
+
+    it('will update if dragOver state changes', () => {
+      const scu = wrapper.instance().shouldComponentUpdate({
+        parto: itemsOrdering,
+      }, { dragOver: 'T', dragBefore: null });
+      expect(scu).toBe(true);
+    });
+
+    it('will update if dragBefore state changes', () => {
+      const scu = wrapper.instance().shouldComponentUpdate({
+        parto: itemsOrdering,
+      }, { dragOver: '', dragBefore: true });
+      expect(scu).toBe(true);
+    });
+
+    it('puts dragtarget-before class on dragged over item', () => {
+      const key = 'L';
+      wrapper.setState({ dragOver: key, dragBefore: true }, () => {
+        const itemWrapper = wrapper.find({ itemKey: key });
+        expect(itemWrapper.hasClass('poui-dragtarget-before')).toBe(true);
+      });
+    });
+
+    it('puts dragtarget-after class on dragged over item', () => {
+      const key = 'L';
+      wrapper.setState({ dragOver: key, dragBefore: false }, () => {
+        const itemWrapper = wrapper.find({ itemKey: key });
+        expect(itemWrapper.hasClass('poui-dragtarget-after')).toBe(true);
+      });
     });
   });
 
@@ -93,14 +123,14 @@ describe('Parto', () => {
       let item = items[2];
       let parto = [item.key];
       wrapper.setProps({ "parto": parto });
-      let itemWrapper = wrapper.find({ itemLabel: item.description })
+      let itemWrapper = wrapper.find({ itemKey: item.key })
       itemWrapper.simulate('click');
       expect(orderedItemClick.mock.calls.length).toBe(1);
     });
 
     it('calls our injected unorderedItemClick function on click', () => {
       let item = items[2];
-      let itemWrapper = wrapper.find({ itemLabel: item.description })
+      let itemWrapper = wrapper.find({ itemKey: item.key })
       itemWrapper.simulate('click');
       expect(unorderedItemClick.mock.calls.length).toBe(1);
     });
@@ -124,7 +154,7 @@ describe('Parto', () => {
       it('calls our reorder function on drop', () => {
         let sourceKey = 'M';
         let destKey = 'P';
-        let itemWrapper = wrapper.find({ itemKey: destKey })
+        let itemWrapper = wrapper.find({ itemKey: destKey });
         let mockEvent = {
           dataTransfer: {
             getData: (ev) => {

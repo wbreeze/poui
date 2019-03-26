@@ -9,7 +9,7 @@
   flex-direction: column;
 }
 
-.poui-item {
+.poui-parto-item {
   margin-top: 0.5ex;
   margin-bottom: 0.5ex;
   padding-top: 0.9ex;
@@ -20,6 +20,19 @@
   border-radius: 1ex;
   background: radial-gradient(#f0f0f0, #ddd);
   cursor: pointer;
+}
+
+.poui-parto-item:hover {
+  border-color: #666;
+  background: radial-gradient(#fff, #eee);
+}
+
+.poui-dragtarget-before {
+  padding-top: 4ex;
+}
+
+.poui-dragtarget-after {
+  padding-bottom: 4ex;
 }
 
 .poui-parto-ul {
@@ -34,9 +47,4 @@
 
 .poui-parto-ul .poui-item {
   display: block;
-}
-
-.poui-item:hover {
-  border-color: #666;
-  background: radial-gradient(#fff, #eee);
 }

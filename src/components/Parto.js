@@ -10,6 +10,7 @@ class Parto extends React.Component {
       dragOver: '',
       dragBefore: null,
     }
+    this.dragEnd = this.dragEnd.bind(this);
   };
 
   static defaultProps = {
@@ -27,7 +28,11 @@ class Parto extends React.Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    return(nextProps.parto !== this.props.parto);
+    return(
+      nextProps.parto !== this.props.parto ||
+      nextState.dragOver !== this.state.dragOver ||
+      nextState.dragBefore !== this.state.dragBefore
+    );
   }
 
   orderedItems() {
@@ -41,61 +46,79 @@ class Parto extends React.Component {
     ev.dataTransfer.effectAllowed = "move";
   }
 
-  isDropBefore(ev) {
-    const targetItem = ev.currentTarget;
-    const rect = targetItem.getBoundingClientRect();
+  isAboveChangePoint(ev) {
+    const rect = ev.currentTarget.getBoundingClientRect();
     const position = Math.round(ev.clientY - rect.top);
-    const midpoint = Math.round(rect.height / 2);
-    return (position < midpoint);
+    let changePoint;
+    if (this.state.dragBefore) {
+      changePoint = Math.round(rect.height - this.state.dragChangePoint);
+    } else {
+      changePoint = Math.round(this.state.dragChangePoint);
+    }
+    return (position < changePoint);
   }
 
   dragOver(ev, item) {
-    const key = ev.dataTransfer.getData("key");
-    const dragBefore = this.isDropBefore(ev);
-    if (
-      key !== item.key &&
-      (item.key !== this.state.dragOver || dragBefore !== this.state.dragBefore)
-    ) {
-      const target = ev.currentTarget;
-      let classList = target.classList;
-      if (dragBefore) {
-        classList.remove('poui-item-dragover-after');
-        classList.add('poui-item-dragover-before');
+    ev.preventDefault();
+    const sourceKey = ev.dataTransfer.getData("key");
+    const target = ev.currentTarget;
+    if (item.key != sourceKey) {
+      if (item.key !== this.state.dragOver) {
+        const rect = target.getBoundingClientRect();
+        const midPoint = Math.round(rect.height / 2);
+        const position = Math.round(ev.clientY - rect.top);
+        const dragBefore = (position < midPoint);
+        this.setState({
+          dragOver: item.key,
+          dragChangePoint: midPoint - 2,
+          dragBefore: dragBefore,
+        });
       } else {
-        classList.remove('poui-item-dragover-before');
-        classList.add('poui-item-dragover-after');
+        const dragBefore = this.isAboveChangePoint(ev);
+        if (dragBefore !== this.state.dragBefore) {
+          this.setState({ ...this.state, dragBefore: dragBefore });
+        }
       }
-      console.log("ITEM CLASS " + ev.currentTarget.className);
-      this.setState({ dragOver: item.key, dragBefore: dragBefore });
-      ev.preventDefault();
     }
   }
 
-  dragLeave(ev) {
-    let classList = ev.currentTarget.classList;
-    classList.remove('poui-item-dragover-before');
-    classList.remove('poui-item-dragover-after');
+  dragEnd(ev) {
+    this.setState({ dragOver: '', dragBefore: null });
   }
 
   dropped(ev, item) {
     ev.preventDefault();
     const key = ev.dataTransfer.getData("key");
-    this.props.itemReorder(key, item.key, this.isDropBefore(ev));
+    const dragBefore = this.state.dragBefore;
+    this.setState({ dragOver: '', dragBefore: null });
+    this.props.itemReorder(key, item.key, dragBefore);
   }
 
   renderItem(item, onClickEvent) {
+    let classNames = ['poui-droptarget'];
+    if (item.key === this.state.dragOver) {
+      classNames.push(
+        this.state.dragBefore ?
+        'poui-dragtarget-before' :
+        'poui-dragtarget-after'
+      );
+    }
     return(
       <Item
         key={item.key}
         itemKey={item.key}
-        itemLabel={item.description}
+        className={classNames.join(' ')}
         onClickEvent={onClickEvent}
         draggable
         onDragStart={(e) => this.startDragging(e, item)}
         onDragOver={(e) => this.dragOver(e, item)}
         onDrop={(e) => this.dropped(e, item)}
-        onDragLeave={this.dragLeave}
-      />
+        onDragEnd={this.dragEnd}
+      >
+        <div
+          className='poui-parto-item'
+        > {item.description} </div>
+      </Item>
     );
   }
 

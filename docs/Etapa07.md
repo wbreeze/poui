@@ -138,7 +138,7 @@ to get an updated order.
 This causes some visual feedback. The ordering alters during the drag,
 cool. It's a bit subtle. More is needed.
 
-However it also doesn't work. For one thing, when we drop outside of
+It also doesn't work. For one thing, when we drop outside of
 any drop zone, the ordering doesn't reset to what it was before the
 drag. The `dropped` event isn't called, nor the `itemReorder` handler.
 This means that the state of the Parto component is now out of synch
@@ -163,7 +163,7 @@ We try `debounce` with the same effect.
 
 ### Ensure React reconciles only when necessary
 
-The React documentation, under the heading of optimizing performance, has
+The React documentation, under the heading of optimizing performance, has a
 [recommendation](https://reactjs.org/docs/optimizing-performance.html#avoid-reconciliation)
 to prevent DOM reconciliation when the state of a component
 has not changed.
@@ -176,8 +176,8 @@ update, because nothing had changed from the prior event.
 Repairing this might help. We undertake to implement and test
 `shouldComponentUpdate` methods to address it.
 
-Testing requires digging into the component lifecycle and seeing that
-[we see that](https://reactjs.org/docs/react-component.html#updating)
+Testing requires reviewing the component lifecycle and
+[seeing that](https://reactjs.org/docs/react-component.html#updating),
 after calling `shouldComponentUpdate`, if permitted, React will first
 call `render` and later call `componentDidUpdate`. We'll spy on both
 and see that they aren't called when we don't want them called.
@@ -194,7 +194,7 @@ from the spy.
 
 Poking around, it seems better to simply test the `shouldComponentUpdate`
 function and trust that React is doing the life cycle calls as documented,
-not updating when shouldComponentUpdate returns false. So we can back out of
+not updating when `shouldComponentUpdate` returns false. So we can back out of
 using sinon and spies and all of that fancyness.
 
 Doing so, we get a warning from React about overriding `shouldComponentUpdate`
@@ -211,10 +211,118 @@ React.Component in place of React.PureComponent. It does not.
 Implementing `shouldComponentUpdate` can be a two edged sword. One of our
 tests broke because we attempted to inject the `onDragStart` event by
 updating props in the test. Because `shouldComponentUpdate` now returns
-false in that case, the new, injected DOM event callback isn't rendered.
+false in that case. The new, injected DOM event callback isn't rendered.
 
 Modifying the callbacks of a rendered component isn't something we'll be
 doing, but it's also something that, with our `shouldComponentUpdate`,
 will no longer work. We went ahead and updated the test.
 
+### Second pass at providing feedback
 
+At this point, we're ready to either try updating the ordering during
+the drag or try some other highlighting method. Updating the ordering during
+the drag led to a state/props mismatch. It was also a strange sort
+of feedback. The list remained looking more or less the same. The change
+was too subtle.
+
+Instead, we try modifying the class names of the dragged-over items,
+as originally intended. To avoid doing duplicate work in the dragOver
+event, we do add some state to the Parto component that tracks the
+item currently on dragOver and whether we're over the top of the bottom.
+Then the `dragOver` method can check before doing any expensive updates.
+
+It works to update the classes with an indicator `poui-droptarget-before` or
+`poui-droptarget-after` and add styling for those classes.
+There is a problem, however. Adding margin before or after causes
+the drag to exit the
+item immediately after entering it, when dragging down. The reason is that
+margin isn't part of the drag target. The moment we update the DOM with the
+`poui-droptarget-before` class, the item drops out from under the cursor.
+
+Updating padding does work, because the padding is part of the drag target.
+It does not look right, however. It looks like the item will be grouped
+within the item dragged over.
+
+We could try wrapping the Item components with a `<div>` that will be the
+drop target, but that creates a structure like,
+```
+<ul>
+  <div>
+    <li> {li child(ren)}  </li>
+  </div>
+  ...
+</ul>
+```
+which isn't quite right.
+What we need to do is wrap the `{li child(ren)}` in a `<div>` within the
+`<li>` element.
+Then we can add padding to the `<div>` element (by manipulating a class),
+or place markers within it to display and hide, or both.
+
+This means making another change to the Item component. Instead of taking
+`itemLabel` as a property, it needs to take children.
+
+Now we style the inner `<div>` with the button-like appearance and use the
+outer `<li>` as a container onto which we place the classes that add
+padding before or after.
+
+### Managing the before and after
+
+With the class decoration working, we try it out (poking) and find that
+we have introduced a feedback behavior that causes the drop target to
+alternate between before and after when the drag location crosses the
+midpoint. It works like this:
+- we track into the item moving (e.g.) down
+- we update the item for inserting before feedback
+- the item renders with border above
+- now the midpoint is lower, and we're tracking above it
+- we update the item for inserting before feedback
+- now the midpoint is higher, and we're tracking below it
+- and so forth
+
+To solve this, we:
+- generate an offset when first tracking into the item
+- compute the crossing point (we're no longer calling it a "midpoint")
+when tracking for insert-before as relative to
+the bottom of the item, by the amount of the offset
+- compute the crossing point when tracking for insert-after as
+relative to the top of the item, by the amount of the offset.
+- we ensure a small gap, so the crossing point when tracking for
+insert-before is always below the crossing point when tracking for
+insert-after.
+
+The dragEnter and dragLeave events turned-out to be useless because
+they're generated whenever the component class changes.
+To got continuity we organized a solution that depends only on
+dragStart, dragOver, drop, and dragEnd.
+
+### Messing with the DOM
+
+For a while we were accessing the DOM element and using the DOM API to
+adjust the classes. This turned-out to be a bad idea because it confused
+the state of the DOM that React expected and caused differences on `render()`.
+It was better to let React do it's work. We adjusted the `shouldComponentUpdate`
+method on the Parto component to take account of the state. Then we rendered
+the before or after class decorations in the `render()` method of Parto.
+That worked-out great.
+
+## Conclusion
+
+Now we can drag and drop the items to reorder them, with feedback.
+It turned-out to be harder that we thought, naturally, with many
+opportunities to learn.
+
+The Parto component is now plenty complicated and criss-crosses the
+drag-drop behavior concern with rendering. We had to make it stateful.
+If it wants to grow any more complicated, it might make sense to tease
+it apart a little.
+
+There are a few behaviors we might like to implement:
+- Don't show before/after feedback when the before or after location
+is adjacent to the original position of the dragged item.
+- Enable an item to be placed before, after, or within a group.
+Currently, there
+is no way to place an item before a group that is first in order, nor after
+a group that is last in order.
+- It might or not make sense to enable a middle ground in an item target
+that would form a new group around the item dragged and item dropped.
