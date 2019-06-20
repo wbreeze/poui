@@ -17,7 +17,7 @@
     "serve": "parcel docs/index.html",
     "watch": "parcel watch docs/index.html",
     "build": "parcel build docs/index.html",
-    "predeploy": "npm run build",
+    "predeploy": "rm -rf dist && parcel build docs/index.html --public-url /poui",
     "deploy": "gh-pages -d dist"
   },
   "repository": {
