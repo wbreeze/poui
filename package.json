@@ -1,6 +1,6 @@
 {
   "name": "poui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A React component for designating partial orders",
   "main": "src/index.js",
   "directories": {
