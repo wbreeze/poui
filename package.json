@@ -7,16 +7,16 @@
     "doc": "docs"
   },
   "files": [
-    "doc",
+    "docs",
     "src",
     "dist"
   ],
   "scripts": {
     "test": "jest",
     "dev": "jest --watch",
-    "serve": "parcel public/index.html",
-    "watch": "parcel watch public/index.html",
-    "build": "parcel build public/index.html"
+    "serve": "parcel docs/index.html",
+    "watch": "parcel watch docs/index.html",
+    "build": "parcel build docs/index.html"
   },
   "repository": {
     "type": "git",
@@ -29,12 +29,12 @@
     "Voting",
     "Vote"
   ],
-  "author": "Douglas Lovell",
+  "author": "Douglas Lovell (wbreeze)",
   "license": "LGPL-3.0",
   "bugs": {
     "url": "https://github.com/wbreeze/poui/issues"
   },
-  "homepage": "https://github.com/wbreeze/poui#readme",
+  "homepage": "https://wbreeze.github.io/poui/",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
@@ -42,10 +42,10 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.8.0",
+    "cssnano": "^4.1.10",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "jest": "^24.8.0",
-    "parcel-bundler": "^1.12.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
