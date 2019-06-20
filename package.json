@@ -16,7 +16,9 @@
     "dev": "jest --watch",
     "serve": "parcel docs/index.html",
     "watch": "parcel watch docs/index.html",
-    "build": "parcel build docs/index.html"
+    "build": "parcel build docs/index.html",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -45,6 +47,7 @@
     "cssnano": "^4.1.10",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "gh-pages": "^2.0.1",
     "jest": "^24.8.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
