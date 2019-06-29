@@ -16,7 +16,7 @@
     "dev": "jest --watch",
     "serve": "parcel docs/index.html",
     "watch": "parcel watch docs/index.html",
-    "build": "npm run lint && parcel build docs/index.html",
+    "build": "yarn run lint && parcel build docs/index.html",
     "predeploy": "rm -rf dist && parcel build docs/index.html --public-url /poui",
     "deploy": "gh-pages -d dist",
     "lint": "eslint ./src"
