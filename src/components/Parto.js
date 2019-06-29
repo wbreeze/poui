@@ -11,7 +11,7 @@ class Parto extends React.Component {
       dragBefore: null,
     }
     this.dragEnd = this.dragEnd.bind(this);
-  };
+  }
 
   static defaultProps = {
     orderedItemClick: () => {},
@@ -158,6 +158,6 @@ class Parto extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default Parto;

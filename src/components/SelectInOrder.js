@@ -42,7 +42,7 @@ function withSelection(Parto) {
       }
       return <Parto {...props} />;
     }
-  };
+  }
 
   function getDisplayName(WrappedComponent) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -50,6 +50,6 @@ function withSelection(Parto) {
 
   WithSelection.displayName = `WithSelection(${getDisplayName(Parto)})`;
   return WithSelection;
-};
+}
 
 export default PartoWithSelection;
