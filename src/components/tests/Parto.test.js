@@ -56,8 +56,8 @@ describe('Parto', () => {
         expect(thirdItem.type()).toBe('li');
         let embeddedGroup = thirdItem.children().first();
         expect(embeddedGroup.type()).toBe('ul');
-        expect(embeddedGroup.exists({ itemKey: 'M' }));
-        expect(embeddedGroup.exists({ itemKey: 'P' }));
+        expect(embeddedGroup.exists({ itemKey: 'M' })).toBeTruthy();
+        expect(embeddedGroup.exists({ itemKey: 'P' })).toBeTruthy();
       });
     });
 

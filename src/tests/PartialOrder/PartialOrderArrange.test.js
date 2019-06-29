@@ -15,7 +15,7 @@ describe('PartialOrder arrangeItemsPerOrder', () => {
     );
     expect(order.length).toBe(4);
     let group = order[2];
-    expect(Array.isArray(group));
+    expect(Array.isArray(group)).toBeTruthy();
     expect(group.length).toBe(2);
   });
 });
