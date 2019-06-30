@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 class Item extends React.Component {
@@ -7,23 +7,27 @@ class Item extends React.Component {
   }
 
   static propTypes = {
-    itemKey: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    children: PropTypes.node,
     onClickEvent: PropTypes.func,
+    itemKey: PropTypes.string
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return(
       nextProps.itemKey !== this.props.itemKey ||
       nextProps.className !== this.props.className
     );
   }
 
-  clickHandler = (e) => {
+  clickHandler = () => {
     this.props.onClickEvent(this.props.itemKey);
   }
 
   render() {
-    const { itemKey, children, onClickEvent, className, ...rest } = this.props;
+    const { children, className, ...rest } = this.props;
+    delete rest.itemKey;
+    delete rest.onClickEvent;
     let itemClass = 'poui-item';
     if (typeof className !== 'undefined') {
       let classes = className.split(' ');

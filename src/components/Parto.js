@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Item from "./Item"
 import PartialOrder from "../PartialOrder";
@@ -82,7 +82,7 @@ class Parto extends React.Component {
     }
   }
 
-  dragEnd(ev) {
+  dragEnd() {
     this.setState({ dragOver: '', dragBefore: null });
   }
 

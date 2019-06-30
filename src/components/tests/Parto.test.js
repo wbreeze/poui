@@ -157,7 +157,7 @@ describe('Parto', () => {
         let itemWrapper = wrapper.find({ itemKey: destKey });
         let mockEvent = {
           dataTransfer: {
-            getData: (ev) => {
+            getData: () => {
               return sourceKey;
             },
           },

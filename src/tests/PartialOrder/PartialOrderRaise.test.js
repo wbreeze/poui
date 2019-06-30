@@ -1,8 +1,6 @@
 import PartialOrder from '../../PartialOrder';
-import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 
 describe('PartialOrder raiseItem', () => {
-  const items = ListItemsFixtures.salad;
   const testOrder = ['T','L',['M','P'],'A',['C','R','Z']];
 
   it('returns given order when key not found', () => {

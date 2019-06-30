@@ -1,8 +1,6 @@
 import PartialOrder from '../../PartialOrder';
-import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 
 describe('PartialOrder lowerItem', () => {
-  const items = ListItemsFixtures.salad;
   const testOrder = ['T','L',['M','P'],'A','R'];
 
   it('lowers an item into a group', () => {

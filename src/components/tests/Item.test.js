@@ -43,7 +43,6 @@ describe('Item component', () => {
   });
 
   it('applies injected event to <li>', () => {
-    const li = wrapper.find('li');
     wrapper.simulate('dragStart');
     expect(onDragStart.mock.calls.length).toBe(1);
   });

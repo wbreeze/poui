@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Parto from "./Parto";
 import PartialOrder from "../PartialOrder";
 
@@ -6,6 +7,11 @@ const PartoWithSelection = withSelection(Parto);
 
 function withSelection(Parto) {
   class WithSelection extends Component {
+    static propTypes = {
+      parto: PropTypes.array.isRequired,
+      itemList: PropTypes.array.isRequired
+    }
+
     constructor(props) {
       super(props);
       const ordering = props.parto || [];

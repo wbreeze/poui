@@ -1,5 +1,4 @@
 import PartialOrder from '../../PartialOrder';
-import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 
 describe("PartialOrder extractItem", () => {
   it('returns key and the rest in an array', () => {

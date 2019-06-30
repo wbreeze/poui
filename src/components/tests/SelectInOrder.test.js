@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import ListItems from '../../ListItems';
 import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 import PartoWithSelection from '../SelectInOrder';
@@ -64,7 +64,7 @@ describe('SelectInOrder', () => {
     let mockEvent = {
       clientY: 0,
       dataTransfer: {
-        getData: (_) => {
+        getData: () => {
           return sourceKey;
         },
       },

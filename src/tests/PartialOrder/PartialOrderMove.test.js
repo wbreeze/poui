@@ -1,5 +1,4 @@
 import PartialOrder from '../../PartialOrder';
-import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
 
 describe('PartialOrder moveItem', () => {
   const testOrder = ['T','L',['M','P'],'A',['C','R','Z']];
