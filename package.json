@@ -2,22 +2,26 @@
   "name": "poui",
   "version": "1.0.4",
   "description": "A React component for designating partial orders",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "directories": {
-    "doc": "docs"
+    "doc": "docs",
+    "lib": "lib",
+    "test": "src"
   },
   "files": [
-    "docs",
     "src",
-    "dist"
+    "lib",
+    "docs",
+    "COPYING*",
+    "yarn.lock"
   ],
   "scripts": {
     "test": "jest",
     "dev": "jest --watch",
     "serve": "parcel docs/index.html",
     "watch": "parcel watch docs/index.html",
-    "build": "yarn run lint && parcel build docs/index.html",
-    "predeploy": "rm -rf dist && parcel build docs/index.html --public-url /poui",
+    "build": "yarn run lint && parcel build docs/index.html --out-dir lib",
+    "predeploy": "rm -rf lib && yarn run parcel build",
     "deploy": "gh-pages -d dist",
     "lint": "eslint ./src"
   },

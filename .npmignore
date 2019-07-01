@@ -1,4 +1,4 @@
 .npmignore
 .gitignore
-.babelrc
 .cache
+**/.DS_Store
