@@ -2,7 +2,7 @@
   "name": "poui",
   "version": "1.0.4",
   "description": "A React component for designating partial orders",
-  "browser": "./index.js",
+  "main": "./index.js",
   "browserslist": "> 0.2% or last 1 version and not dead",
   "directories": {
     "doc": "docs",
