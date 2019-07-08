@@ -35,5 +35,4 @@ node_modules/
 # dotenv environment variables file
 .env
 
-# Build directory
-lib/
+dist

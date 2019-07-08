@@ -2,7 +2,6 @@
   "name": "poui",
   "version": "1.0.4",
   "description": "A React component for designating partial orders",
-  "browser": "./index.js",
   "browserslist": "> 0.2% or last 1 version and not dead",
   "directories": {
     "doc": "docs",
@@ -19,13 +18,10 @@
   ],
   "scripts": {
     "test": "jest",
-    "dev": "jest --watch",
-    "serve": "parcel docs/index.html",
-    "watch": "parcel watch docs/index.html",
-    "build": "yarn run lint && parcel build index.js --out-dir lib",
-    "predeploy": "rm -rf lib && yarn run parcel build",
-    "deploy": "gh-pages -d dist",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "serve": "webpack-dev-server --mode development",
+    "build": "yarn run lint && webpack --mode production",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -50,21 +46,24 @@
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
-    "acorn": "^6.1.1",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
-    "cssnano": "^4.1.10",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.0.1",
     "eslint-plugin-jest": "^22.7.1",
     "eslint-plugin-react": "^7.14.2",
+    "file-loader": "^4.0.0",
     "gh-pages": "^2.0.1",
     "jest": "^24.8.0",
-    "parcel": "^1.12.3",
-    "parcel-bundler": "^1.12.3",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2"
   },
   "peerDependencies": {
     "react": "^16.8.4",
