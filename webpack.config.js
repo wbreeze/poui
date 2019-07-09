@@ -15,15 +15,10 @@ module.exports = {
   },
   plugins: [htmlWebpackPlugin],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'poui.js',
-    library: 'poui',
-    libraryTarget: 'umd',
-    publicPath: '/',
-    umdNamedDefine: true
+    path: path.resolve(__dirname, 'demo/dist'),
+    filename: 'bundle.js',
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
     host: '0.0.0.0' // for tryout with the browser of an actual mobile device
   }
 };
