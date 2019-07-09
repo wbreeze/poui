@@ -1,4 +1,4 @@
-export { PartialOrder } from './src/PartialOrder';
-export { PartoWithSelection } from './src/components/SelectInOrder';
-export { Item } from './src/components/Item';
-export { Parto } from './src/components/Parto';
+require('./src/PartialOrder');
+require('./src/components/SelectInOrder');
+require('./src/components/Item');
+require('./src/components/Parto');
