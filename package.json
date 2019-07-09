@@ -1,6 +1,7 @@
 {
   "name": "poui",
-  "version": "1.0.4",
+  "main": "./dist/index.js",
+  "version": "1.0.5",
   "description": "A React component for designating partial orders",
   "browserslist": "> 0.2% or last 1 version and not dead",
   "directories": {
@@ -10,18 +11,20 @@
   },
   "files": [
     "src",
-    "lib",
+    "dist",
     "docs",
     "COPYING*",
-    "yarn.lock",
-    "index.js"
+    "yarn.lock"
   ],
   "scripts": {
     "test": "jest",
     "lint": "eslint ./src",
     "serve": "webpack-dev-server --mode development",
+    "clean": "rm -rf dist/*",
+    "transpile": "yarn run clean && babel src -d dist --copy-files",
+    "prepublishOnly": "yarn run transpile",
     "build": "yarn run lint && webpack --mode production",
-    "deploy": "gh-pages -d dist"
+    "deploy": "yarn run build && gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -34,7 +37,7 @@
     "Voting",
     "Vote"
   ],
-  "author": "Douglas Lovell (wbreeze)",
+  "author": "Douglas Lovell (https://github.com/wbreeze)",
   "license": "LGPL-3.0",
   "bugs": {
     "url": "https://github.com/wbreeze/poui/issues"
@@ -44,6 +47,7 @@
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-export-default-from": "^7.5.2",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.2",
