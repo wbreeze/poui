@@ -1,8 +1,8 @@
 {
   "name": "poui",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A React component for designating partial orders",
-  "main": "./index.js",
+  "main": "dist/index.js",
   "browserslist": "> 0.2% or last 1 version and not dead",
   "directories": {
     "doc": "docs",
@@ -11,21 +11,22 @@
   },
   "files": [
     "src",
-    "lib",
+    "dist",
     "docs",
     "COPYING*",
-    "yarn.lock",
-    "index.js"
+    "yarn.lock"
   ],
   "scripts": {
     "test": "jest",
     "dev": "jest --watch",
-    "serve": "parcel docs/index.html",
-    "watch": "parcel watch docs/index.html",
-    "build": "yarn run lint && parcel build index.js --out-dir lib",
-    "predeploy": "rm -rf lib && yarn run parcel build",
-    "deploy": "gh-pages -d dist",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "serve": "parcel demo/index.html",
+    "watch": "parcel watch demo/index.html",
+    "clean": "rm -rf dist && mkdir -p dist",
+    "transpile": "yarn run clean && babel src -d dist --copy-files",
+    "prepublishOnly": "yarn run transpile",
+    "build": "yarn run lint && yarn run transpile",
+    "deploy": "yarn run build && gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,7 @@
     "Voting",
     "Vote"
   ],
-  "author": "Douglas Lovell (wbreeze)",
+  "author": "Douglas Lovell (https://github.com/wbreeze)",
   "license": "LGPL-3.0",
   "bugs": {
     "url": "https://github.com/wbreeze/poui/issues"
@@ -48,12 +49,11 @@
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-export-default-from": "^7.5.2",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
-    "acorn": "^6.1.1",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
-    "cssnano": "^4.1.10",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.0.1",
@@ -63,8 +63,8 @@
     "jest": "^24.8.0",
     "parcel": "^1.12.3",
     "parcel-bundler": "^1.12.3",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   },
   "peerDependencies": {
     "react": "^16.8.4",

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PartoWithSelection from "./components/SelectInOrder";
+import PartoWithSelection from "./components/PartoWithSelection";
 import ListItemsFixtures from './fixtures/ListItemsFixtures';
 import "./App.css";
 
