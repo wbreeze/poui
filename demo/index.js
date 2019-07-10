@@ -1,4 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Poui from "../src/Poui.js";
-ReactDOM.render(<Poui />, document.getElementById("root"));
+import ListItemsFixtures from '../src/fixtures/ListItemsFixtures';
+
+ReactDOM.render(
+  <Poui
+    itemList={ListItemsFixtures.salad}
+    parto={['T','L',['M','P'],'A']}
+  />,
+  document.getElementById("root")
+);
