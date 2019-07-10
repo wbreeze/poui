@@ -19,11 +19,12 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint ./src",
-    "serve": "webpack-dev-server --mode development",
-    "clean": "rm -rf dist/*",
+    "serve": "parcel demo/index.html",
+    "watch": "parcel watch demo/index.html",
+    "clean": "rm -rf dist && mkdir -p dist",
     "transpile": "yarn run clean && babel src -d dist --copy-files",
     "prepublishOnly": "yarn run transpile",
-    "build": "yarn run lint && webpack --mode production",
+    "build": "yarn run lint && yarn run transpile",
     "deploy": "yarn run build && gh-pages -d dist"
   },
   "repository": {
@@ -52,23 +53,18 @@
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.0.1",
     "eslint-plugin-jest": "^22.7.1",
     "eslint-plugin-react": "^7.14.2",
-    "file-loader": "^4.0.0",
     "gh-pages": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
+    "parcel": "^1.12.3",
+    "parcel-bundler": "^1.12.3",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.5",
-    "webpack-dev-server": "^3.7.2"
+    "react-dom": "^16.8.4"
   },
   "peerDependencies": {
     "react": "^16.8.4",
