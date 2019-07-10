@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import PartoWithSelection from "./components/PartoWithSelection";
 import ListItemsFixtures from './fixtures/ListItemsFixtures';
-import "./App.css";
+import "./Poui.css";
 
-class App extends Component {
+class Poui extends Component {
   render() {
     return(
       <div className="poui-root">
-        <h1>Partial Order User Interface</h1>
         <PartoWithSelection
           itemList={ListItemsFixtures.salad}
           parto={['T','L',['M','P'],'A']}
@@ -17,4 +16,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Poui;
