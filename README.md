@@ -15,11 +15,15 @@ Use your package manager to install it.
 Use it in your application by requiring it,
 and then rendering at as a component.
 You can view
-[src/App.js](https://github.com/wbreeze/poui/blob/master/src/App.js)
+[demo/index.js](https://github.com/wbreeze/poui/blob/master/demo/index.js)
 as an example. Basically, you do this:
 
+    import React from "react";
+    import ReactDOM from "react-dom";
+    import { Poui } from "poui";
+
     <div className="poui-root">
-      <PartoWithSelection
+      <Poui
         itemList={[
           { "key": 'Z', "description": 'Zanahoria' },
           { "key": 'R', "description": 'Remolacha' },
@@ -34,9 +38,12 @@ as an example. Basically, you do this:
       />
     </div>
 
-The itemList JSON contains key and description pairs, one per item.
-The parto JSON contains the initial ordering, which can be an empty array,
+The `itemList` JSON contains key and description pairs, one per item.
+The `parto` JSON contains the initial ordering, which can be an empty array,
 and which the component will update.
+
+You can substitute "`PartoWithSelection`" for "`Poui`" to get a rendering
+without any stylesheet. See below the section on styling for more information.
 
 For more about the content af the `parto` property, see
 [Etapa05](https://github.com/wbreeze/poui/blob/master/docs/Etapa05.md),
@@ -61,6 +68,24 @@ Shown in rank order, the preference example looks like this:
     - Pimiento verde
 1. Acetuna
 
+### Styling (CSS)
+
+The project follows the BEM,
+[Block, Element, Modifier](http://getbem.com/)
+method of styling, using classes.
+We prefix the block class names with "`poui-`."
+
+A default stylesheet is provided for the `Poui` component.
+Find it as [Poui.css](https://github.com/wbreeze/poui/blob/master/src/Poui.css)
+in the `src` directory.
+For details, browse the components using an inspector, or view the
+component render methods of the components in the source tree.
+
+The component, `PartoWithSelection` will render the interface completely
+without styling. It functions; however the click and drag targets are limited
+to the item numbers and bullets. Rendering using PartoWithSelection will
+enable complete control over the styling.
+
 ## Development setup and making changes
 
 The project uses:
@@ -82,17 +107,6 @@ The project uses:
 1. Pull the repository using git.
 1. Have the Node.js package manager (npm) installed.
 1. Install the packages using `npm install`.
-
-### Styling (CSS)
-
-The project follows the BEM,
-[Block, Element, Modifier](http://getbem.com/)
-method of styling, using classes.
-We prefix the block class names with "`poui-`."
-
-A default stylesheet is provided.
-For details, browse the components using an inspector, or view the
-component render methods of the components in the source tree.
 
 ## Etapas
 
