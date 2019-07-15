@@ -2,11 +2,15 @@ import React from 'react';
 import { mount } from 'enzyme';
 import ListItems from '../../ListItems';
 import ListItemsFixtures from '../../fixtures/ListItemsFixtures';
-import PartoWithSelection from '../SelectInOrder';
+import PartoWithSelection from '../PartoWithSelection';
 
 describe('SelectInOrder', () => {
   const itemList = ListItemsFixtures.salad;
   const initialOrder = ['T','L',['M','P'],'A'];
+  let currentOrdering = initialOrder;
+  let updateOrderingCallback = jest.fn((ordering) => {
+      currentOrdering = ordering;
+    });
   let wrapper;
 
   beforeEach(() => {
@@ -14,7 +18,18 @@ describe('SelectInOrder', () => {
       <PartoWithSelection
         itemList={ itemList }
         parto={ initialOrder }
+        updateOrdering={ updateOrderingCallback }
       />
+    );
+  });
+
+  it ('sends a callback when the ordering changes', () => {
+    const item = ListItems.itemFor(itemList, 'R');
+    const itemWrapper = wrapper.find({ itemKey: item.key })
+    itemWrapper.simulate("click");
+    expect(updateOrderingCallback.mock.calls.length).toBe(1);
+    expect(currentOrdering).toEqual(
+      [ 'T', 'L', [ 'M', 'P' ], 'A', 'R', [ 'Z', 'C' ] ]
     );
   });
 

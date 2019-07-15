@@ -9,7 +9,8 @@ function withSelection(Parto) {
   class WithSelection extends Component {
     static propTypes = {
       parto: PropTypes.array.isRequired,
-      itemList: PropTypes.array.isRequired
+      itemList: PropTypes.array.isRequired,
+      updateOrdering: PropTypes.func
     }
 
     constructor(props) {
@@ -18,25 +19,31 @@ function withSelection(Parto) {
       this.unorderedSelected = this.unorderedSelected.bind(this);
       this.orderedSelected = this.orderedSelected.bind(this);
       this.itemReorder = this.itemReorder.bind(this);
+      this.orderingCallback = this.props.updateOrdering || (() => {});
       this.state = {
         ordering: PartialOrder.encompassItems(props.itemList, ordering),
       };
     }
 
+    updateOrdering(updatedOrdering) {
+      this.setState({ ordering: updatedOrdering });
+      this.orderingCallback(updatedOrdering);
+    }
+
     unorderedSelected(key) {
       const updatedOrdering = PartialOrder.raiseItem(this.state.ordering, key);
-      this.setState({ ordering: updatedOrdering });
+      this.updateOrdering(updatedOrdering);
     }
 
     orderedSelected(key) {
       const updatedOrdering = PartialOrder.lowerItem(this.state.ordering, key);
-      this.setState({ ordering: updatedOrdering });
+      this.updateOrdering(updatedOrdering);
     }
 
     itemReorder(subject, target, before) {
       const updatedOrdering = PartialOrder.moveItem(this.state.ordering,
         subject, target, before);
-      this.setState({ ordering: updatedOrdering });
+      this.updateOrdering(updatedOrdering);
     }
 
     render() {
