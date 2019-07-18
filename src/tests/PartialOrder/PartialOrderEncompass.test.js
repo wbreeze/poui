@@ -32,4 +32,13 @@ describe("PartialOrder encompassItems", () => {
     expect(Array.isArray(order[2])).toBe(false);
     expect(order[2]).toBe(goodKey);
   });
+
+  it('correctly handles all items in one group', () => {
+    const keys = ListItems.keys(items);
+    const parto = new Array(keys);
+    const order = PartialOrder.encompassItems(items, parto);
+    expect(order.length).toBe(1);
+    expect(Array.isArray(order[0])).toBe(true);
+    expect(order).toStrictEqual(parto);
+  });
 });

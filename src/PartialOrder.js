@@ -28,9 +28,11 @@ const PartialOrder = {
   // Returns a new order with groups containing only one item replaced with
   //   the item
   flattenSoloGroups: (order) => {
-    return order.map((key) => {
+    const flat = order.map((key) => {
       if (Array.isArray(key)) {
-        if (key.length == 1) {
+        if (key.length == 0) {
+          return null;
+        } else if (key.length == 1) {
           return key[0];
         } else {
           return key;
@@ -39,6 +41,7 @@ const PartialOrder = {
         return key;
       }
     });
+    return flat.filter(key => key != null);
   },
 
   // Returns a new order arranged according to the given order, with
@@ -50,7 +53,7 @@ const PartialOrder = {
     const rest = keys.filter((key) => {
       return !included.includes(key);
     });
-    return PartialOrder.flattenSoloGroups(cleanOrder).concat([rest]);
+    return PartialOrder.flattenSoloGroups(cleanOrder.concat([rest]));
   },
 
   // Return a new group with item and given index removed
