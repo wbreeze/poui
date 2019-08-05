@@ -73,7 +73,7 @@ describe('SelectInOrder', () => {
     expect(firstUnordered.text().trim()).toEqual(item.description);
   });
 
-  it('reorders when item dropped on a different one', () => {
+  it.skip('reorders when item dropped on a different one', () => {
     let sourceKey = 'L';
     let destKey = 'A';
     let mockEvent = {
