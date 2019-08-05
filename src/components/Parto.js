@@ -22,7 +22,7 @@ class Parto extends React.Component {
     itemReorder: PropTypes.func,
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return(
       nextProps.parto !== this.props.parto
     );
