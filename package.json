@@ -1,6 +1,6 @@
 {
   "name": "poui",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "A React component for designating partial orders",
   "main": "dist/index.js",
   "browserslist": "> 0.2% or last 1 version and not dead",
