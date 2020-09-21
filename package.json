@@ -22,6 +22,7 @@
     "lint": "eslint ./src",
     "clean": "rm -rf dist && mkdir -p dist",
     "transpile": "yarn run clean && babel src -d dist --copy-files",
+    "start": "webpack-dev-server --mode development",
     "prepublishOnly": "yarn run transpile",
     "build": "yarn run lint && yarn run transpile",
     "deploy": "yarn run build && gh-pages -d dist"
@@ -52,15 +53,20 @@
     "@babel/preset-react": "^7.9.4",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
+    "babel-loader": "^8.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^7.9.0",
     "eslint-plugin-jest": "^24.0.1",
     "eslint-plugin-react": "^7.19.0",
+    "express": "^4.17.1",
     "gh-pages": "^3.1.0",
     "jest": "^26.4.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "peerDependencies": {
     "react": "^16.8.4",

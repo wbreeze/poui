@@ -23,8 +23,11 @@ node_modules/
 
 # cache directories
 .npm
+.yarn
 .cache
 .eslintcache
+
+.pnp.js
 
 # Optional REPL history
 .node_repl_history
